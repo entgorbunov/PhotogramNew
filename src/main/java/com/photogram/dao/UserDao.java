@@ -35,7 +35,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
     }
 
     @Override
-    public List<User> findAll(Connection connection) {
+    public List<User> findAll(Long id, Connection connection) {
         List<User> users = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
@@ -43,10 +43,11 @@ public class UserDao implements UserDaoInterface<User, Long> {
                 users.add(createUser(resultSet));
             }
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding all users: " + e.getMessage(), e);
         }
         return users;
     }
+
 
     private User createUser(ResultSet resultSet) throws SQLException {
         return new User(resultSet.getObject("id", Long.class),
@@ -60,17 +61,15 @@ public class UserDao implements UserDaoInterface<User, Long> {
 
     @Override
     public Optional<User> findById(Long id, Connection connection) {
-        User user = null;
-        ResultSet resultSet;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
             preparedStatement.setLong(1, id);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                user = createUser(resultSet);
-                return Optional.of(user);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(createUser(resultSet));
+                }
             }
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error finding user by ID " + id + ": " + e.getMessage(), e);
         }
         return Optional.empty();
     }
@@ -95,7 +94,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
                 }
             }
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error saving user: " + e.getMessage(), e);
         }
     }
 
@@ -110,7 +109,8 @@ public class UserDao implements UserDaoInterface<User, Long> {
             preparedStatement.setLong(6, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error updating user with ID " + user.getId() + ": " + e.getMessage(), e);
+
         }
     }
 
@@ -119,10 +119,10 @@ public class UserDao implements UserDaoInterface<User, Long> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
             preparedStatement.setLong(1, id);
             int changedData = preparedStatement.executeUpdate();
-            if (changedData == 0) throw new DaoException("User has not been deleted");
+            if (changedData == 0) throw new DaoException("No user to delete with ID " + id);
             return changedData > 0;
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException("Error deleting user with ID " + id + ": " + e.getMessage(), e);
         }
     }
 }

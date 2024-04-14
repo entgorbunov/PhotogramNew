@@ -118,7 +118,7 @@ public class ImageDao implements BaseDaoInterface<Image, Long> {
     }
 
     @Override
-    public List<Image> findAll(Connection connection) {
+    public List<Image> findAll(Long id, Connection connection) {
         List<Image> images = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_ALL_SQL)) {

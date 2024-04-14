@@ -1,9 +1,5 @@
 
 Ü
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ŞÎô×8ÂÆ«Àí1J$77d08828-e180-4b3a-b415-889f66904a86
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ŞÎô×8Í¢Ìñí1J$3b4f25f2-1ffa-4e6d-8000-ee38bafbc929
 š
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(öˆÛö8ÃÆ«Àí1J$a64920ff-8631-403b-acbb-597eb3051217
-‹
-java:S1128"IRemove this unused import 'com.photogram.daoInterfaces.BaseDaoInterface'.(Æé¬8€¡ÈÀí1J$0452e37e-5110-4e96-942f-7f8976697cff
-
-java:S1128"GRemove this unused import 'com.photogram.dataSource.ConnectionManager'.(üÓ×ìüÿÿÿÿ8€¡ÈÀí1J$277ecf8b-6e02-4830-acac-a65bc4160028
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(öˆÛö8Ï¢Ìñí1J$105032e3-a372-4b1c-a2b6-6c5eecc369a4

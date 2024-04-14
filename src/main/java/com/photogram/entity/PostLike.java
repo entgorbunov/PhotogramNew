@@ -1,12 +1,18 @@
 package com.photogram.entity;
 
 
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Data
+@Builder
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostLike {
     private Long id;
     private Long userId;

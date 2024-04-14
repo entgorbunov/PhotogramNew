@@ -6,5 +6,6 @@ import lombok.Value;
 @Value
 public class UserDto {
     Long id;
+    String username;
     String bio;
 }

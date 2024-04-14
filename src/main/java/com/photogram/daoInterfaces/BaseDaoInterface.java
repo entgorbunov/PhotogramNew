@@ -14,5 +14,5 @@ public interface BaseDaoInterface<E, K> {
 
     Optional<E> findById(K id, Connection connection);
 
-    List<E> findAll(Connection connection);
+    List<E> findAll(K id, Connection connection);
 }

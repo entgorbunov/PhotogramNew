@@ -1,8 +1,11 @@
 package com.photogram.entity;
 
 import lombok.*;
-
-@Data
+@Builder
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 

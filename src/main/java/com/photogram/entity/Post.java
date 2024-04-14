@@ -5,7 +5,11 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Data
+@Builder
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {

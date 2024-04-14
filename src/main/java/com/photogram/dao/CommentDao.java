@@ -130,7 +130,7 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
     }
 
     @Override
-    public List<CommentForPost> findAll(Connection connection) {
+    public List<CommentForPost> findAll(Long id, Connection connection) {
         List<CommentForPost> commentForPostList = new ArrayList<>();
         try (var statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_ALL_SQL)) {

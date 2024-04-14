@@ -45,7 +45,7 @@ public class CommentLikeDao implements CommentLikeDaoInterface<CommentLike, Long
     }
 
     @Override
-    public List<CommentLike> findAll(Connection connection) {
+    public List<CommentLike> findAll(Long id, Connection connection) {
         return null;
     }
     // DAO methods
