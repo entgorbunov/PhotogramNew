@@ -1,0 +1,6 @@
+
+	java:S112 "FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8’ÄÕ™í1J$375dc3f9-ec61-49c0-9938-8a8b2018db59
+›
+java:S1989"XHandle the following exception that could be thrown by "valueOf": NumberFormatException.(ÈÊ†˜8Œ€øší1J$0f83bccd-e311-4c65-af9f-41b925341e77
+‰
+java:S1989 "AHandle the "RuntimeException" thrown here in a "try/catch" block.(Ò‚Òéüÿÿÿÿ8œÄÕ™í1J$8bf5da2f-ec47-4750-944b-eb4642e0cbfe

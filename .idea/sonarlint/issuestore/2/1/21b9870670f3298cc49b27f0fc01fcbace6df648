@@ -1,0 +1,5 @@
+
+Ü
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ÔÄëª8ý¢‰›í1J$5b46c070-0496-48ec-a165-d59615b0898a
+•
+java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8¸£ÕÀí1J$2a89db8e-91fb-47b9-92f9-495f77d8bb1b
