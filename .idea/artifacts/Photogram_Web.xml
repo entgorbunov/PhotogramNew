@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Photogram:Web">
+    <output-path>$PROJECT_DIR$/out/artifacts/Photogram_Web</output-path>
+    <root id="archive" name="Photogram_Web.war">
+      <element id="artifact" artifact-name="Photogram:Web exploded" />
+    </root>
+  </artifact>
+</component>
