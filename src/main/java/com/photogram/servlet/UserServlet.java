@@ -16,6 +16,8 @@ import java.util.List;
 @WebServlet("/users")
 public class UserServlet extends HttpServlet {
 
+
+
     private final UserService userService = UserService.getInstance();
 
     @Override
