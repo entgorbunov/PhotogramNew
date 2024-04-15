@@ -18,7 +18,7 @@ public class UserServlet extends HttpServlet {
 
 
 
-    private final UserService userService = UserService.getInstance();
+    private final transient UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

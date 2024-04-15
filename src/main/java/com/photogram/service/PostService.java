@@ -20,9 +20,9 @@ import java.util.Optional;
 public class PostService {
     public static final PostService INSTANCE = new PostService();
 
-    private final PostDao postDao = PostDao.getInstance();
-    public static final UserDao userDao = UserDao.getInstance();
-    private final UserService userService = UserService.getInstance();
+    private static final PostDao postDao = PostDao.getInstance();
+    private static final UserDao userDao = UserDao.getInstance();
+    private static final UserService userService = UserService.getInstance();
 
     Connection connection = ConnectionManager.open();
 
