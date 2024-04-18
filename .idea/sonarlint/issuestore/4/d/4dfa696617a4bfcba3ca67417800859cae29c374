@@ -1,5 +1,9 @@
 
 Ü
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ŞÎô×8Í¢Ìñí1J$17c0ba76-3c05-44d5-ab96-1774d1afd966
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ŞÎô×8ïÌ¾êî1J$14e10bc3-d5a5-4763-a18d-42ba7732f7fe
 š
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(öˆÛö8Ï¢Ìñí1J$2cc4f2fb-7a19-433f-9c92-9692e49d7a33
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(öˆÛö8ğÌ¾êî1J$ee52b197-b835-46d0-a0a4-b147db93ef05
+„
+java:S1128"<Remove this unused import 'com.photogram.mapper.UserMapper'.(±º¬ûÿÿÿÿ8¾›—øî1J$8a72030e-4e46-4181-b740-3dd586b5ebdb
+†
+java:S1128">Remove this unused import 'com.photogram.service.UserService'.(Şîêüÿÿÿÿ8¿›—øî1J$34be2f86-faea-4a5d-b998-94ff0aeb768b

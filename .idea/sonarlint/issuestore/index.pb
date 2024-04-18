@@ -45,10 +45,6 @@ d
 4src/main/java/com/photogram/servlet/UserServlet.java,9/c/9c9e77958e0748833b76d64ea35bc5d3958b4348
 \
 ,src/main/java/com/photogram/entity/User.java,0/d/0da90e937a41a74a5dcf1fb47d0cfc69ecd73f18
-s
-Csrc/main/java/com/photogram/daoInterfaces/PostLikeDaoInterface.java,a/8/a8d4c1973bffba1f17f1996c45999a7762539b4c
-o
-?src/main/java/com/photogram/daoInterfaces/PostDaoInterface.java,9/3/930194fda5d521fead3d2987087c0c26958324b2
 d
 4src/main/java/com/photogram/service/PostService.java,2/1/2162a560a63fe67d1e6ca65a3d390f09359f388e
 \
@@ -75,8 +71,6 @@ g
 7src/main/java/com/photogram/servlet/SessionServlet.java,a/f/af3fe170ccfaaad03b83d5ac81ce3a8c9287a412
 j
 :src/main/java/com/photogram/servlet/DispatcherServlet.java,9/5/953b9eada9eefbf94148ad277d6a5e3e816cb761
-Å
-Q.idea/sonarlint/securityhotspotstore/5/3/53ec3684de3efe7437dc8177cfea95d52d35e74e,d/8/d8d50c7083ade3624ab1c169182f7e852000e475
 U
 %.mvn/wrapper/maven-wrapper.properties,3/2/32e074f71d16c1e88ac02aa83592ca6ad1fd98a8
 Å
@@ -133,8 +127,6 @@ Q.idea/sonarlint/securityhotspotstore/d/0/d03dd49877e58e2925bb5da5fa45f536986988
 Å
 Q.idea/sonarlint/securityhotspotstore/5/1/518cc21e08ca08e4d4dc4775576470d0312d263b,9/7/979a4b31c5a42c23caa901b1bbe3b785c0887088
 Å
-Q.idea/sonarlint/securityhotspotstore/5/4/547588abd06f83657ec0f7d58c497affa2c53ce7,8/1/81ce03a693af47c2754cf0d04d924769be01cbcf
-Å
 Q.idea/sonarlint/securityhotspotstore/4/9/49767019a2fee22a613912508aa2789b74108680,e/c/ec352462fe3b0193df28da1811acc2751c7cd481
 w
 G.idea/sonarlint/issuestore/4/9/49767019a2fee22a613912508aa2789b74108680,c/d/cd5087b640c124d2e3b270ecf4109e71fa7e392d
@@ -174,24 +166,8 @@ s
 Csrc/main/java/com/photogram/daoException/DbConnectionException.java,8/9/8905b23c44542511b569c20ce531c7e9911f6fdc
 j
 :src/main/java/com/photogram/daoException/DaoException.java,0/6/0675c2862990b5eaf61c4dc47d714270508b4769
-v
-Fsrc/main/java/com/photogram/daoInterfaces/CommentLikeDaoInterface.java,6/e/6e473606ab60fc80ec8772d1f09cb7a878537ff6
-w
-Gsrc/main/java/com/photogram/daoInterfaces/SubscriptionDaoInterface.java,8/1/81483e1fb9b24672b451ebd53790b50c7694bdeb
-r
-Bsrc/main/java/com/photogram/daoInterfaces/CommentDaoInterface.java,5/b/5b23ae9a653d50a2dc249d493bde8d35aa8ee097
-o
-?src/main/java/com/photogram/daoInterfaces/BaseDaoInterface.java,a/6/a6fe43da15945ce00cb395e61130cfefa24cdd21
-p
-@src/main/java/com/photogram/daoInterfaces/ImageDaoInterface.java,e/8/e854660714a8579e3601fce06fad9cf34bec761c
-o
-?src/main/java/com/photogram/daoInterfaces/UserDaoInterface.java,6/8/68a1a3f20250204880ebf1dc986035fabe373130
-Å
-Q.idea/sonarlint/securityhotspotstore/9/3/930194fda5d521fead3d2987087c0c26958324b2,8/a/8a77307ee714e1875d02825dd46876e9a43c08a6
 Å
 Q.idea/sonarlint/securityhotspotstore/9/5/953b9eada9eefbf94148ad277d6a5e3e816cb761,e/4/e440c854aadecb8d4b9f2e0eaffc045b1a189100
-Å
-Q.idea/sonarlint/securityhotspotstore/a/8/a8d4c1973bffba1f17f1996c45999a7762539b4c,c/c/cc4adc51ae14a5b67057391fdd2c32a68422a9c6
 Å
 Q.idea/sonarlint/securityhotspotstore/2/1/2162a560a63fe67d1e6ca65a3d390f09359f388e,2/a/2a3ea91d61b2008136737b082eef74a9eba1945f
 Å
@@ -216,8 +192,6 @@ Q.idea/sonarlint/securityhotspotstore/4/f/4f8b7e57022e418a4aae0a0d3a77cfd5d9f03d
 Q.idea/sonarlint/securityhotspotstore/f/8/f899446912b35529e62978900c618b017a2a8b86,5/a/5af3b07e79ed8edd536e32ee57399451c41b4706
 Å
 Q.idea/sonarlint/securityhotspotstore/f/b/fb11bce197918e2cf8dfcfa66119c6b6ef84f112,d/9/d90672970bf7bc170c7622ce1a82e4a1298b5363
-E
-web/WEB-INF/posts.jsp,5/7/57c0f75f6d3c5f942cbe79560b1f53c8dd2447e9
 =
 web/posts.jsp,7/5/7542165386c2dcc89b49bb4c3232d548dc4bc1bc
 g
@@ -255,10 +229,16 @@ G.idea/sonarlint/issuestore/5/a/5af3b07e79ed8edd536e32ee57399451c41b4706,c/9/c9
 Å
 Q.idea/sonarlint/securityhotspotstore/d/9/d90672970bf7bc170c7622ce1a82e4a1298b5363,c/7/c7c2a2c76bfd8160a34d551cf2f60b13b2677e3e
 Å
-Q.idea/sonarlint/securityhotspotstore/5/7/57c0f75f6d3c5f942cbe79560b1f53c8dd2447e9,d/9/d97f3f644666563b7a41715d211a160ebaecea36
-Å
 Q.idea/sonarlint/securityhotspotstore/b/f/bf309d8c628acb7a519621d50ed40c54ecc25fda,0/c/0cfd70f51df77ab09b192a9e088d4f0e95738550
 w
 G.idea/sonarlint/issuestore/c/1/c1dfabc303d0e7ecb0a11ac30f32d7b219705ced,c/5/c5d00905479a0791f1ec83afa534c86006aa69a4
 Å
 Q.idea/sonarlint/securityhotspotstore/c/1/c1dfabc303d0e7ecb0a11ac30f32d7b219705ced,f/3/f389f0e4a896ec460c2d452ff11f53792ff7719d
+e
+5src/main/java/com/photogram/dao/UserDaoInterface.java,4/3/43eddc59f511626b9293ff244a46f939f850f729
+i
+9src/main/java/com/photogram/service/ServiceInterface.java,0/9/09ee13961f9da9b240f6dc44cb609f7185a24223
+e
+5src/main/java/com/photogram/dao/BaseDaoInterface.java,f/a/fa683bc265fb2cee212f6f89125ce5d320ed358e
+P
+ resources/application.properties,c/a/ca143b126d8a08da5fc41aeb8537c52baff8c8e7

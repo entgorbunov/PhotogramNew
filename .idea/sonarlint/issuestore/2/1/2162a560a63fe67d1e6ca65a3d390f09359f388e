@@ -1,9 +1,5 @@
 
-…
-java:S2259+"BA "NullPointerException" could be thrown; "user" is nullable here.(ö’Ï8‚ìêŒî1J$c1b2dfed-95bd-4bae-a23a-c19357a8341e
-á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(şÊõ¨øÿÿÿÿ8ä€˜ñí1J$059c3e42-e5ea-4366-a4bc-56c35ab73518
-~
-java:S1128"6Remove this unused import 'com.photogram.entity.Post'.(İØıøÿÿÿÿ8‹ìêŒî1J$aa40231f-a6e0-4c32-9690-57a70de19e08
-w
-java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8ŒìêŒî1J$fcbbbd2a-04c8-4956-bc41-15ec9676ce22
+_
+java:S2259)"BA "NullPointerException" could be thrown; "user" is nullable here.(ö’Ï8ú„³Ôî1
+»
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(úÖøıÿÿÿÿÿ8ş„³Ôî1

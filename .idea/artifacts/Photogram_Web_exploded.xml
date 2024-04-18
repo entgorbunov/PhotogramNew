@@ -6,7 +6,23 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Photogram" />
+          <element id="directory" name="lib" />
         </element>
+        <element id="library" level="project" name="Maven: jakarta.el:jakarta.el-api:5.0.0" />
+        <element id="library" level="project" name="Maven: jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0" />
+        <element id="library" level="project" name="Maven: jakarta.servlet:jakarta.servlet-api:5.0.0" />
+        <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
+        <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.1.2" />
+        <element id="library" level="project" name="Maven: org.checkerframework:checker-qual:3.42.0" />
+        <element id="library" level="project" name="Maven: org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1" />
+        <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-api:5.9.2" />
+        <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.9.2" />
+        <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-engine:1.9.2" />
+        <element id="library" level="project" name="Maven: org.opentest4j:opentest4j:1.2.0" />
+        <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.7.3" />
+        <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.32" />
+        <element id="module-source" name="Photogram" />
+        <element id="directory" name="lib" />
       </element>
     </root>
   </artifact>
