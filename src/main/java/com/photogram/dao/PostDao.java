@@ -1,34 +1,35 @@
 package com.photogram.dao;
 
 import com.photogram.daoException.DaoException;
-import com.photogram.daoInterfaces.PostDaoInterface;
+import com.photogram.dataSource.ConnectionManager;
 import com.photogram.entity.Post;
 import com.photogram.entity.User;
-import com.photogram.mapper.UserMapper;
-import com.photogram.service.UserService;
-import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PostDao implements PostDaoInterface<Post, Long> {
-    private static volatile PostDao instance;
-    private final UserService userService = UserService.getInstance();
+import static lombok.AccessLevel.PRIVATE;
 
-                private static final String USER_NOT_FOUND_WITH_ID = "User not found with ID: ";
+@NoArgsConstructor(access = PRIVATE)
+public class PostDao implements PostDaoInterface<Post, Long> {
+    @Getter
+    private static final PostDao instance = new PostDao();
+    private final UserDao userDao = UserDao.getInstance();
+
 
     private static final String FIND_ALL_SQL = """
-            SELECT photogram.public.posts.id,
-                       posts.user_id,
-                       posts.caption,
-                       posts.post_time,
-                       posts.image_url
-                       from posts
+            SELECT id,
+                   user_id,
+                   caption,
+                   post_time,
+                   image_url,
+                   is_deleted
+                   from posts
             """;
 
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
@@ -37,56 +38,41 @@ public class PostDao implements PostDaoInterface<Post, Long> {
 
 
     private static final String INSERT_NEW_POST = """
-            INSERT INTO photogram.public.posts (id, user_id, caption, post_time, image_url) VALUES (?, ?, ?, ?, ?)
+            INSERT INTO photogram.public.posts (id, user_id, caption, post_time, image_url, is_deleted) VALUES (?, ?, ?, ?, ?, ?)
             """;
 
     private static final String UPDATE_POST = """
-            UPDATE photogram.public.posts SET id = ?, user_id = ?, caption = ?, post_time = ?, image_url = ? WHERE id = ?
+            UPDATE photogram.public.posts SET id = ?, user_id = ?, caption = ?, post_time = ?, image_url = ?, is_deleted = ? WHERE id = ?
             """;
 
-    private static final String DELETE_POST = """
-            DELETE from photogram.public.posts where id = ?
+    private static final String SOFT_DELETE_POST = """
+            UPDATE photogram.public.posts SET is_deleted = TRUE where id = ?
             """;
 
-
-    public static PostDao getInstance() {
-        PostDao localInstance = instance;
-        if (localInstance == null) {
-            synchronized (PostDao.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new PostDao();
-                }
-            }
-        }
-        return localInstance;
-    }
 
     @Override
-    public boolean delete(Long id, Connection connection) {
-        try (var preparedStatement = connection.prepareStatement(DELETE_POST)) {
+    public void delete(Long id) {
+        try (Connection connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(SOFT_DELETE_POST)) {
             preparedStatement.setLong(1, id);
             var changedData = preparedStatement.executeUpdate();
             if (changedData == 0) throw new DaoException("Post has not been deleted");
-            return changedData > 0;
         } catch (SQLException e) {
             throw new DaoException("Deleting post failed", e);
         }
     }
 
     @Override
-    public void save(Post post, Connection connection) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_POST, Statement.RETURN_GENERATED_KEYS)) {
+    public void save(Post post) {
+        try (Connection connection = ConnectionManager.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_POST, Statement.RETURN_GENERATED_KEYS)) {
             var affectedRows = setInfoToPost(post, preparedStatement);
             if (affectedRows == 0) {
                 throw new DaoException("Creating post failed");
             }
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    post.setId(generatedKeys.getLong("id"));
-                } else {
-                    throw new DaoException("Creating post failed, no ID get");
-                }
+                if (generatedKeys.next()) post.setId(generatedKeys.getLong("id"));
+                else throw new DaoException("Creating post failed, no ID get");
             }
         } catch (SQLException e) {
             throw new DaoException("Saving post failed", e);
@@ -94,12 +80,11 @@ public class PostDao implements PostDaoInterface<Post, Long> {
     }
 
     @Override
-    public void update(Post post, Connection connection) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_POST)) {
+    public void update(Post post) {
+        try (Connection connection = ConnectionManager.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_POST)) {
             var affectedRows = setInfoToPost(post, preparedStatement);
-            if (affectedRows == 0) {
-                throw new DaoException("Updating post failed");
-            }
+            if (affectedRows == 0) throw new DaoException("Updating post failed");
         } catch (SQLException e) {
             throw new DaoException("Updating post failed", e);
         }
@@ -108,33 +93,44 @@ public class PostDao implements PostDaoInterface<Post, Long> {
 
 
     @Override
-    public Optional<Post> findById(Long userId, Connection connection) {
+    public Optional<Post> findById(Long userId) {
         Post post = new Post();
         ResultSet resultSet;
-        try (var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+        try (Connection connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
             preparedStatement.setLong(1, userId);
             resultSet = preparedStatement.executeQuery();
-            var userDto = userService.findById(userId, connection);
+
 
             if (resultSet.next()) {
-                return Optional.of(createPost(resultSet, UserMapper.userDtoToUser(userDto)));
+                User user = UserDao.getInstance().findById(userId)
+                        .orElseThrow(() ->
+                                new DaoException("Couldn't find the user"));
+
+                return Optional.of(createPost(resultSet, user));
             }
         } catch (SQLException e) {
             throw new DaoException("Finding post by User ID failed", e);
         }
+
         return Optional.ofNullable(post);
+
     }
 
 
     @Override
-    public List<Post> findAll(Long userId, Connection connection) {
+    public List<Post> findAll(Long userId) {
         List<Post> postList = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL_SQL)) {
-            var userDto = userService.findById(userId, connection);
+        try (
+                Connection connection = ConnectionManager.get();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(FIND_ALL_SQL)) {
+            User user = UserDao.getInstance().findById(userId)
+                    .orElseThrow(() ->
+                            new DaoException("Couldn't find the user"));
 
             while (resultSet.next()) {
-                postList.add(createPost(resultSet, UserMapper.userDtoToUser(userDto)));
+                postList.add(createPost(resultSet, user));
             }
         } catch (SQLException e) {
             throw new DaoException("Finding all posts failed", e);
@@ -142,32 +138,14 @@ public class PostDao implements PostDaoInterface<Post, Long> {
         return postList;
     }
 
-    @Override
-    public List<Post> findAllByUserId(Long userId, Connection connection) {
-        List<Post> postList = new ArrayList<>();
-        try {
-            try (var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
-                preparedStatement.setObject(1, userId);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                var userDto = userService.findById(userId, connection);
 
-                while (resultSet.next()) {
-                    postList.add(createPost(resultSet, UserMapper.userDtoToUser(userDto)));
-                }
-                return postList;
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Finding all posts by user_id is not working, error.", e);
-        }
-    }
-
-    private Post createPost(ResultSet resultSet, User user) {
+    private Post createPost(ResultSet resultSet, User user) throws SQLException {
         try {
             return new Post(resultSet.getLong("id"),
                     user,
                     resultSet.getString("caption"),
-                    resultSet.getObject("post_time", Timestamp.class).toLocalDateTime(),
-                    resultSet.getString("image_url"));
+                    resultSet.getObject("post_time", LocalDateTime.class),
+                    resultSet.getString("image_url"), resultSet.getBoolean("is_deleted"));
         } catch (SQLException e) {
             throw new DaoException("Creating post failed", e);
         }
@@ -180,10 +158,13 @@ public class PostDao implements PostDaoInterface<Post, Long> {
             preparedStatement.setString(3, post.getCaption());
             preparedStatement.setObject(4, post.getPostTime());
             preparedStatement.setString(5, post.getImageUrl());
-            preparedStatement.setLong(6, post.getId());
+            preparedStatement.setBoolean(6, post.getIsDeleted());
+            preparedStatement.setLong(7, post.getId());
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Setting info into post failed", e);
         }
     }
+
+
 }

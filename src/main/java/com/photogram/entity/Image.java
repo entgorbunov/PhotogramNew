@@ -2,7 +2,6 @@ package com.photogram.entity;
 
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Builder
@@ -17,6 +16,7 @@ public class Image {
     private String path;
     private Post postId;
     private User userId;
+    private Boolean isDeleted;
     private LocalDateTime uploadedTime;
 
 }

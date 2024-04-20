@@ -1,76 +1,67 @@
 package com.photogram.service;
 
-import com.photogram.builder.UserBuilder;
 import com.photogram.dao.UserDao;
 import com.photogram.daoException.DaoException;
-import com.photogram.dataSource.ConnectionManager;
-import com.photogram.dto.PostDto;
 import com.photogram.dto.UserDto;
 import com.photogram.entity.User;
-import com.photogram.mapper.PostMapper;
 import com.photogram.mapper.UserMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.sql.Connection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserService {
+public class UserService implements UserServiceInterface<UserDto, Long> {
 
-    public static final UserService INSTANCE = new UserService();
-    private static final Long MAX_LONG = Long.MAX_VALUE;
+    public static UserService instance = new UserService();
 
     private final UserDao userDao = UserDao.getInstance();
+
     public static UserService getInstance() {
-        return INSTANCE;
+        if (instance == null) {
+            synchronized (UserService.class) {
+                if (instance == null) {
+                    instance = new UserService();
+                }
+            }
+        }
+        return instance;
     }
 
-    Connection connection = ConnectionManager.open();
-
+    @Override
     public List<UserDto> findAll() {
-        return userDao.findAll(MAX_LONG, connection).stream()
+        return userDao.findAll().stream()
                 .map(UserMapper::userToUserDto)
                 .toList();
     }
 
-    public UserDto findById(Long id, Connection connection) {
-        var optionalUser = userDao.findById(id, connection);
-        return optionalUser.map(UserMapper::userToUserDto).orElseThrow(() -> new DaoException("Find the user with " +
-                                                                                              "userID" + id +
-                                                                                              " was " +
-                                                                                              "failed"));
+    @Override
+    public UserDto findById(Long id) {
+        return userDao.findById(id).map(UserMapper::userToUserDto).orElseThrow(() ->
+                new DaoException("Find the user with userID" + id + " was failed"));
     }
 
-    public UserDto createUser(UserDto userDto) {
+    @Override
+    public void create(UserDto userDto) {
         User user = UserMapper.userDtoToUser(userDto);
-        userDao.save(user, connection);
-        return UserMapper.userToUserDto(user);
+        userDao.save(user);
     }
 
-    public UserDto updateUser(UserDto userDto) {
-        User user = userDao.findById(userDto.getId(), connection)
-                .orElseThrow(() -> new DaoException("User isn't found while updating the user"));
+    @Override
+    public UserDto update(UserDto userDto) {
+        User user = userDao.findById(userDto.getId())
+                .orElseThrow(() ->
+                        new DaoException("User isn't found while updating the user"));
         user.setUsername(userDto.getUsername());
         user.setBio(userDto.getBio());
-        userDao.update(user, connection);
+        userDao.update(user);
         return userDto;
     }
 
-    public boolean deleteUser(Long userId) {
-        boolean deleted = userDao.delete(userId, connection);
-        if (!deleted) throw new DaoException("No user to delete with ID " + userId);
-        return true;
+    @Override
+    public void delete(Long userId) {
+        userDao.delete(userId);
     }
-
-
-
-
-
-
-
 
 
 }

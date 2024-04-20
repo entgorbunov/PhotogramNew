@@ -1,11 +1,12 @@
 
-Â
-java:S1186!"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(êŠ™áúÿÿÿÿJ$82797573-b672-4998-b7fa-6991915fc26d
-½
-java:S1186&"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ğ¹ØßJ$952d1494-e495-42bd-ac11-875f02a61750
-Ú
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(È…ıùÿÿÿÿJ$ccdfb350-4f84-416f-b390-1699e1760d82
+Ä
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(â¥ÿí8ï€Õï1J$f39a710a-f2e2-402c-b23f-9f89f3da24b7
+É
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ø¯†ˆÿÿÿÿÿ8üëóÓï1J$dc90ec09-b964-4809-8781-1d0c69133350
+Ä
+java:S1186#"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ùõ¨8üëóÓï1J$4dff5204-ceab-4a94-8516-4c2e948f3780
+á
+java:S6548
+"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(È…ıùÿÿÿÿ8şëóÓï1J$e3cd04a8-f4fc-4866-99b5-662f0633bcd8
 “
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(ÁÓŞÿJ$1bc2d7a8-d8c3-4c25-a170-b6a049acacde
-n
-java:S11681"+Return an empty collection instead of null.(¥¹ï8‰ÖíØí1J$459d1ef9-70ef-4b5c-9e93-a2c64dc87101
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(ÁÓŞÿJ$c9f18eb3-b4ad-4c2e-9968-45828f99f2e1

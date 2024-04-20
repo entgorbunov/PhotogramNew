@@ -1,3 +1,5 @@
 
-“
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(˜ßËJ$8eee0825-c1dd-4572-bab5-7e01c2f85f0d
+á
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(û¤öúÿÿÿÿ8ÊÀŒâï1J$71c52976-98c7-4f86-a887-1437cd8a1920
+{
+java:S1135ƒ"2Complete the task associated to this TODO comment.(ÎĞİ¤ùÿÿÿÿ8Ü¿‘Øï1J$3c44be08-411b-4cc2-b613-32730d81aa53

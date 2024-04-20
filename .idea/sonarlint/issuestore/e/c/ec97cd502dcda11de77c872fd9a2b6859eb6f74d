@@ -1,3 +1,7 @@
 
-˜
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(õ¦¡áÿÿÿÿÿJ$aef28e44-d345-4520-b314-ffdd6817030e
+’
+java:S1192"ODefine a constant instead of duplicating this literal "User not found" 3 times.(º¨²Å8ÓªÙçï1J$d85c7a40-1854-402e-9095-40d5bf852f76
+—
+java:S1192"ODefine a constant instead of duplicating this literal "Post not found" 4 times.(öè¨ÿÿÿÿÿ8ÓªÙçï1J$f001a3dd-8267-4c41-a4b2-e74847812e0c
+á
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(™Ú²˜ÿÿÿÿÿ8•ßÑçï1J$e22bb5c8-b353-4327-97ae-fcd32660e7a3

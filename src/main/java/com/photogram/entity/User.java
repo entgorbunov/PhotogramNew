@@ -15,8 +15,9 @@ public class User {
     private String username;
     private String profilePicture;
     private String bio;
-    private boolean isPrivate;
+    private Boolean isPrivate;
     private String imageUrl;
+    private Boolean isActive;
 
     public User(Long id) {
         this.id = id;

@@ -1,12 +1,9 @@
 package com.photogram.dao;
 
 import com.photogram.entity.CommentLike;
-import com.photogram.daoInterfaces.CommentLikeDaoInterface;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.sql.Connection;
-import java.util.List;
 import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -25,28 +22,24 @@ public class CommentLikeDao implements CommentLikeDaoInterface<CommentLike, Long
     }
 
     @Override
-    public boolean delete(Long id, Connection connection) {
-        return false;
-    }
-
-    @Override
-    public void save(CommentLike entity, Connection connection) {
+    public void delete(Long id) {
 
     }
 
     @Override
-    public void update(CommentLike entity, Connection connection) {
+    public void save(CommentLike entity) {
 
     }
 
     @Override
-    public Optional<CommentLike> findById(Long id, Connection connection) {
+    public void update(CommentLike entity) {
+
+    }
+
+    @Override
+    public Optional<CommentLike> findById(Long id) {
         return Optional.empty();
     }
 
-    @Override
-    public List<CommentLike> findAll(Long id, Connection connection) {
-        return null;
-    }
-    // DAO methods
+
 }

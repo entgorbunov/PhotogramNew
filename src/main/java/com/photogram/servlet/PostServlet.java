@@ -10,12 +10,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.rmi.ServerException;
 import java.util.List;
 
 @WebServlet("/posts")
 public class PostServlet extends HttpServlet {
-    private final transient PostService postService = PostService.getInstance();
+    private final transient PostService postService = PostService.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -33,7 +32,7 @@ public class PostServlet extends HttpServlet {
 
         try (var writer = resp.getWriter()) {
             writer.write("<h1>Опубликованные посты:</h1>");
-            List<PostDto> posts = postService.findAllPostsByUserId(userId);
+            List<PostDto> posts = postService.findAll(userId);
             if (posts.isEmpty()) {
                 writer.write("<p>Посты не найдены для пользователя с ID: " + userId + ".</p>");
             } else {

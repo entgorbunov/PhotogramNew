@@ -1,13 +1,4 @@
 
-š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ì‰¤ˆøÿÿÿÿJ$9ae50992-2f05-4106-9468-1772952a11a8
-L
-java:S1128"/Remove this unused import 'lombok.AccessLevel'.(ˆ¥ó¹8‰ù›í1
-R
-java:S1128"5Remove this unused import 'lombok.NoArgsConstructor'.(¸¨›8‰ù›í1
-Q
-java:S1128	"4Remove this unused import 'java.io.FileInputStream'.(˜³ÉÓ8‰ù›í1
-R
-java:S1128
-"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8‰ù›í1
-M
-java:S1128"0Remove this unused import 'java.nio.file.Paths'.(áè°¯8‰ù›í1
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ì‰¤ˆøÿÿÿÿ8²…ãÏï1J$20e7f13c-dc1d-4e87-817e-c5f7ec2719ad
+u
+java:S4925F"-Remove this "Class.forName()", it is useless.(õ†¨Äùÿÿÿÿ8¿…ãÏï1J$7d530789-6fd4-4729-992f-779c98c59b85

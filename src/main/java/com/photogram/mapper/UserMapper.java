@@ -2,7 +2,9 @@ package com.photogram.mapper;
 
 import com.photogram.dto.UserDto;
 import com.photogram.entity.User;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class UserMapper {
 
     public static UserDto userToUserDto(User user) {

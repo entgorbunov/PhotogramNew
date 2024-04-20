@@ -1,13 +1,12 @@
 package com.photogram.dao;
 
-import com.photogram.daoInterfaces.CommentDaoInterface;
 import com.photogram.daoException.DaoException;
+import com.photogram.dataSource.ConnectionManager;
 import com.photogram.entity.CommentForPost;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,20 +55,21 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
 
 
     @Override
-    public boolean delete(Long id, Connection connection) {
-        try (var preparedStatement = connection.prepareStatement(DELETE_COMMENT)) {
+    public void delete(Long id) {
+        try (Connection connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(DELETE_COMMENT)) {
             preparedStatement.setLong(1, id);
             var changedData = preparedStatement.executeUpdate();
             if (changedData == 0) throw new DaoException("Comment has not been deleted");
-            return changedData > 0;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public void save(CommentForPost comment, Connection connection) {
-        try (var preparedStatement = connection.prepareStatement(INSERT_NEW_COMMENT, Statement.RETURN_GENERATED_KEYS)) {
+    public void save(CommentForPost comment) {
+        try (Connection connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(INSERT_NEW_COMMENT, Statement.RETURN_GENERATED_KEYS)) {
             var affectedRows = setInfoToComment(comment, preparedStatement);
             if (affectedRows == 0) {
                 throw new DaoException("Creating comment failed");
@@ -87,23 +87,11 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
         }
     }
 
-    private int setInfoToComment(CommentForPost comment, PreparedStatement preparedStatement) {
-        try {
-            preparedStatement.setLong(1, comment.getId());
-            preparedStatement.setLong(2, comment.getPost().getId());
-            preparedStatement.setLong(3, comment.getUser().getId());
-            preparedStatement.setString(4, comment.getText());
-            preparedStatement.setObject(5, comment.getCommentTime());
-            return preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
 
     @Override
-    public void update(CommentForPost comment, Connection connection) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COMMENT)) {
+    public void update(CommentForPost comment) {
+        try (Connection connection = ConnectionManager.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COMMENT)) {
             var affectedRows = setInfoToComment(comment, preparedStatement);
             if (affectedRows == 0) {
                 throw new DaoException("Updating post failed");
@@ -114,10 +102,11 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
     }
 
     @Override
-    public Optional<CommentForPost> findById(Long id, Connection connection) {
+    public Optional<CommentForPost> findById(Long id) {
         CommentForPost commentForPost = new CommentForPost();
         ResultSet resultSet;
-        try (var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+        try (Connection connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -130,9 +119,10 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
     }
 
     @Override
-    public List<CommentForPost> findAll(Long id, Connection connection) {
+    public List<CommentForPost> findAll(Long id) {
         List<CommentForPost> commentForPostList = new ArrayList<>();
-        try (var statement = connection.createStatement();
+        try (Connection connection = ConnectionManager.get();
+             var statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_ALL_SQL)) {
             while (resultSet.next()) {
                 commentForPostList.add(createComment(resultSet));
@@ -146,8 +136,10 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
     private CommentForPost createComment(ResultSet resultSet) {
         try {
             return new CommentForPost(resultSet.getLong("id"),
-                    postDao.findById(resultSet.getLong("post_id"), resultSet.getStatement().getConnection()).orElseThrow(),
-                    userDao.findById(resultSet.getLong("user_id"), resultSet.getStatement().getConnection()).orElseThrow(),
+                    postDao.findById(resultSet.getLong("post_id")).orElseThrow(() ->
+                            new DaoException("Post not found")),
+                    userDao.findById(resultSet.getLong("user_id")).orElseThrow(() ->
+                            new DaoException("User not found")),
                     resultSet.getString("text"),
                     resultSet.getTimestamp("comment_time").toLocalDateTime());
         } catch (SQLException e) {
@@ -155,5 +147,18 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
         }
     }
 
+
+    private int setInfoToComment(CommentForPost comment, PreparedStatement preparedStatement) {
+        try {
+            preparedStatement.setLong(1, comment.getId());
+            preparedStatement.setLong(2, comment.getPost().getId());
+            preparedStatement.setLong(3, comment.getUser().getId());
+            preparedStatement.setString(4, comment.getText());
+            preparedStatement.setObject(5, comment.getCommentTime());
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 }
 

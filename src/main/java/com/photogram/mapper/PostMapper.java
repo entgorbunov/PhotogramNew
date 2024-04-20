@@ -3,7 +3,9 @@ package com.photogram.mapper;
 import com.photogram.dto.PostDto;
 import com.photogram.entity.Post;
 import com.photogram.entity.User;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class PostMapper {
     public static PostDto toPostDto(Post post) {
         return PostDto.builder()

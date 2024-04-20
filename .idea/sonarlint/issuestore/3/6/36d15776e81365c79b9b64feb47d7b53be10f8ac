@@ -1,5 +1,5 @@
 
 á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(Ä£È˜ûÿÿÿÿ8¸§Ž’í1J$cdfefacf-51d2-477b-a176-86ef251d82bf
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ôÍÅ¥ûÿÿÿÿ8è†ÓÞï1J$cb265cdd-9ab8-472a-b75f-f5f1a3b7c57c
 š
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(™©Ê§8»§Ž’í1J$2b155773-5a24-4390-a3b8-7fea830e4f5b
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(™©Ê§8ë†ÓÞï1J$56636ae6-cdd2-4890-84dc-5fbfdeeb6920

@@ -10,18 +10,7 @@ import java.util.Properties;
 public final class PropertiesUtil {
 
     private static final Properties PROPERTIES = new Properties();
-    
-    static {
-        loadDriver();
-    }
 
-    private static void loadDriver() {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     static {
         loadProperties();
@@ -31,13 +20,13 @@ public final class PropertiesUtil {
         return PROPERTIES.getProperty(key);
     }
 
-    public static Properties loadProperties() {
+    public static void loadProperties() {
         try (var inputStream = PropertiesUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
             PROPERTIES.load(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return PROPERTIES;
+
     }
 
 

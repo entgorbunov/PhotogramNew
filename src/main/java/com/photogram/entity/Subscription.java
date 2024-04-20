@@ -2,7 +2,6 @@ package com.photogram.entity;
 
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 @Builder
 @Getter
@@ -13,8 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Subscription {
     private Long id;
-    private Long followerId;
-    private Long followingId;
+    private User follower;
+    private User following;
     private LocalDateTime subscriptionTime;
 
 }
