@@ -1,13 +1,13 @@
 
-	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Μ‰¤ψÿÿÿÿJ$9ae50992-2f05-4106-9468-1772952a11a8
-L
-java:S1128"/Remove this unused import 'lombok.AccessLevel'.(¥σΉ8‰ω›ν1
-R
-java:S1128"5Remove this unused import 'lombok.NoArgsConstructor'.(Έ¨›8‰ω›ν1
-Q
-java:S1128	"4Remove this unused import 'java.io.FileInputStream'.(³ΙΣ8‰ω›ν1
-R
+΅	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Μ‰¤ψÿÿÿÿ8†ΐ‹ο1J$4753a015-afb0-4259-b9a7-a3b1fc034a3e
+r
+java:S1128"/Remove this unused import 'lombok.AccessLevel'.(¥σΉ8©ίν’ο1J$05435170-5f3d-4cd6-b238-a854f6a7b608
+x
+java:S1128"5Remove this unused import 'lombok.NoArgsConstructor'.(Έ¨›8©ίν’ο1J$50b103b7-9d17-4323-8d75-e5f621033fb4
+w
+java:S1128	"4Remove this unused import 'java.io.FileInputStream'.(³ΙΣ8ªίν’ο1J$6951dfef-8d39-4a27-b4a5-46758fd800c4
+x
 java:S1128
-"0Remove this unused import 'java.io.IOException'.(ªΊ»Ϊύÿÿÿÿ8‰ω›ν1
-M
-java:S1128"0Remove this unused import 'java.nio.file.Paths'.(αθ°―8‰ω›ν1
+"0Remove this unused import 'java.io.IOException'.(ªΊ»Ϊύÿÿÿÿ8ªίν’ο1J$981422d1-83e4-42f9-910c-70fa54c80fe9
+s
+java:S1128"0Remove this unused import 'java.nio.file.Paths'.(αθ°―8ªίν’ο1J$e92873b1-31e7-4cf1-9517-6a115487afb1

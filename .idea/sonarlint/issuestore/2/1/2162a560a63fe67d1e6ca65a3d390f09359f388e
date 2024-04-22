@@ -1,3 +1,5 @@
 
-á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(şÊõ¨øÿÿÿÿ8ä€˜ñí1J$fd5418f4-7b39-4dec-b0fa-3dcd89a0598a
+_
+java:S2259)"BA "NullPointerException" could be thrown; "user" is nullable here.(ö’Ï8ú„³Ôî1
+»
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(úÖøıÿÿÿÿÿ8ş„³Ôî1

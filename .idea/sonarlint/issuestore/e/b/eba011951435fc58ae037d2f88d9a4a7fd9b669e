@@ -1,9 +1,9 @@
 
-	java:S112p"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Ç‰’í1J$c7230ced-5865-456e-b4c2-02c9de1293db
+	java:S112p"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Ç‰’í1J$b7386899-2740-434d-9afe-dac7447d09c1
 á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(–ŞÊÄùÿÿÿÿ8Ô‰’í1J$a36e8164-070b-4f11-8cbd-8cafc599e7b5
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(–ŞÊÄùÿÿÿÿ8Ô‰’í1J$d3b30ad9-513f-4601-ad4b-65740989e6df
 š
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(°¨½8Õ‰’í1J$d3bea004-0a25-48d5-adfe-a9f938fe9324
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(°¨½8Õ‰’í1J$d10a97c3-65b8-4b0e-82de-abd19485eb3f
 |
 java:S1128
-"4Remove this unused import 'java.time.LocalDateTime'.(æÃ§ƒüÿÿÿÿ8„ÉÒñí1J$92226eee-40a0-40ea-b9a5-6c4081123506
+"4Remove this unused import 'java.time.LocalDateTime'.(æÃ§ƒüÿÿÿÿ8„ÉÒñí1J$90629964-de74-45a7-a388-b1ed98ab2d2a
