@@ -16,7 +16,7 @@ import java.util.List;
 public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, Long> {
     @Getter
     private static final SubscriptionDao INSTANCE = new SubscriptionDao();
-    UserDao userDao = UserDao.getInstance();
+
 
 
     public static final String FIND_FOLLOWING = """
@@ -63,11 +63,12 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
     }
 
     @Override
-    public void update(Subscription subscription) {
+    public Subscription update(Subscription subscription) {
         try (Connection connection = ConnectionManager.get();
         var preparedStatement = connection.prepareStatement(UPDATE_SUBSCRIPTION)) {
             int affectedRows = setInfoToSubscription(subscription, preparedStatement);
             if (affectedRows == 0) throw new DaoException("Failed to update a subscription");
+            return subscription;
         } catch (SQLException e) {
             throw new DaoException("Failed to update subscription", e);
         }
@@ -82,8 +83,8 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
         PreparedStatement preparedStatement = connection.prepareStatement(FIND_FOLLOWING)) {
             preparedStatement.setLong(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    following.add(userDao.createUser(resultSet));
+                if (resultSet.next()) {
+                    following.add(UserDao.getInstance().createUser(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -100,7 +101,7 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
             preparedStatement.setLong(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    followers.add(userDao.createUser(resultSet));
+                    followers.add(UserDao.getInstance().createUser(resultSet));
                 }
             }
         } catch (SQLException e) {

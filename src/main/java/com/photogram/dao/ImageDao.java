@@ -4,6 +4,7 @@ import com.photogram.daoException.DaoException;
 import com.photogram.dataSource.ConnectionManager;
 import com.photogram.entity.Image;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.*;
@@ -13,9 +14,10 @@ import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImageDao implements ImageDaoInterface<Image, Long> {
-    private static volatile ImageDao instance;
-    private final PostDao postDao = PostDao.getInstance();
-    private final UserDao userDao = UserDao.getInstance();
+    @Getter
+    private static final ImageDao INSTANCE = new ImageDao();
+
+
 
     private static final String FIND_ALL_SQL = """
             SELECT id,
@@ -42,17 +44,6 @@ public class ImageDao implements ImageDaoInterface<Image, Long> {
     private static final String SOFT_DELETE_IMAGE = """
             UPDATE images set is_deleted = TRUE where id = ?
             """;
-
-    public static ImageDao getInstance() {
-        if (instance == null) {
-            synchronized (ImageDao.class) {
-                if (instance == null) {
-                    instance = new ImageDao();
-                }
-            }
-        }
-        return instance;
-    }
 
     @Override
     public void delete(Long id) {
@@ -88,13 +79,14 @@ public class ImageDao implements ImageDaoInterface<Image, Long> {
 
 
     @Override
-    public void update(Image image) {
+    public Image update(Image image) {
         try (Connection connection = ConnectionManager.get();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_IMAGE)) {
             var affectedRows = setInfoToImage(image, preparedStatement);
             if (affectedRows == 0) {
                 throw new DaoException("Updating post failed");
             }
+            return image;
         } catch (SQLException e) {
             throw new DaoException("Error while updating image", e);
         }
@@ -118,7 +110,7 @@ public class ImageDao implements ImageDaoInterface<Image, Long> {
     }
 
     @Override
-    public List<Image> findAll(Long id) {
+    public List<Image> findAll() {
         List<Image> images = new ArrayList<>();
         try (Connection connection = ConnectionManager.get();
              Statement statement = connection.createStatement();
@@ -136,9 +128,9 @@ public class ImageDao implements ImageDaoInterface<Image, Long> {
         try {
             return new Image(resultSet.getLong("id"),
                     resultSet.getString("path"),
-                    postDao.findById(resultSet.getLong("post_id")).orElseThrow(() ->
+                    PostDao.getInstance().findById(resultSet.getLong("post_id")).orElseThrow(() ->
                             new DaoException("Post hasn't found by Id")),
-                    userDao.findById(resultSet.getLong("user_id")).orElseThrow(() ->
+                    UserDao.getInstance().findById(resultSet.getLong("user_id")).orElseThrow(() ->
                             new DaoException("User hasn't found by Id")),
                     resultSet.getBoolean("is_deleted"),
                     resultSet.getTimestamp("uploaded_time").toLocalDateTime());

@@ -1,14 +1,11 @@
 package com.photogram.dao;
 
-import java.util.Optional;
-
 public interface BaseDaoInterface<E, K> {
 
+    E update(E entity);
+
+    void save(E e);
     void delete(K id);
-
-    void save(E entity);
-
-    void update(E entity);
 
 
 

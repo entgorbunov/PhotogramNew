@@ -4,8 +4,10 @@ import com.photogram.entity.User;
 
 import java.util.List;
 
-public interface SubscriptionDaoInterface<S, L> extends BaseDaoInterface<S, L> {
-    List<User> findUsersFollowingById(Long userId);
-    List<User> findUsersFollowersById(Long userId);
+public interface SubscriptionDaoInterface<S, K> extends BaseDaoInterface<S, K> {
+
+    List<User> findUsersFollowingById(K userId);
+    List<User> findUsersFollowersById(K userId);
+
 
 }

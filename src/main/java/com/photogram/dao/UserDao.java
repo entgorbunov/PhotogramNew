@@ -88,7 +88,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
     }
 
     @Override
-    public void update(User user) {
+    public User update(User user) {
         Connection connection = ConnectionManager.get();
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER)) {
             preparedStatement.setString(1, user.getUsername());
@@ -99,6 +99,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
             preparedStatement.setBoolean(6, user.getIsPrivate());
             preparedStatement.setLong(7, user.getId());
             preparedStatement.executeUpdate();
+            return user;
         } catch (SQLException e) {
             throw new DaoException("Error updating user with ID " + user.getId() + ": " + e.getMessage(), e);
 
@@ -128,4 +129,3 @@ public class UserDao implements UserDaoInterface<User, Long> {
                 resultSet.getBoolean("is_active"));
     }
 }
-//TODO заполнить весь дао слой, слой сервисов

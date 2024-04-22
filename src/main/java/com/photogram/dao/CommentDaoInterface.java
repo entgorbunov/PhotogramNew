@@ -3,9 +3,12 @@ package com.photogram.dao;
 
 import com.photogram.entity.CommentForPost;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface CommentDaoInterface<C, K> extends BaseDaoInterface<C, K>{
+public interface CommentDaoInterface<K, C> extends BaseDaoInterface<K, C> {
 
-    Optional<CommentForPost> findById(K id);
+
+    List<CommentForPost> findAll();
+    Optional<CommentForPost> findById(Long id);
 }

@@ -1,12 +1,3 @@
 
-Ä
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(â¥ÿí8ï€Õï1J$f39a710a-f2e2-402c-b23f-9f89f3da24b7
-É
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ø¯†ˆÿÿÿÿÿ8üëóÓï1J$dc90ec09-b964-4809-8781-1d0c69133350
-Ä
-java:S1186#"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ùõ¨8üëóÓï1J$4dff5204-ceab-4a94-8516-4c2e948f3780
-á
-java:S6548
-"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(È…ıùÿÿÿÿ8şëóÓï1J$e3cd04a8-f4fc-4866-99b5-662f0633bcd8
-“
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(ÁÓŞÿJ$c9f18eb3-b4ad-4c2e-9968-45828f99f2e1
+Ü
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ùÈ•¥8¢Ìûğ1J$838175b8-5ab1-4980-895f-663226c7d314

@@ -1,6 +1,3 @@
 
-	java:S112d"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ã¥úÓï1J$3dad1ae6-6bb7-4ed8-aabb-af226ed9fcd6
 á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(–ŞÊÄùÿÿÿÿ8í¥úÓï1J$718fca68-b7bc-476b-8652-842b9d0fed43
-š
-java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(°¨½8ï¥úÓï1J$e3c405b1-88fd-4e73-aa36-684fc6e06461
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(–ŞÊÄùÿÿÿÿ8ıîõ®ğ1J$0730e87b-9620-4dcb-b601-ad98fba08b2a

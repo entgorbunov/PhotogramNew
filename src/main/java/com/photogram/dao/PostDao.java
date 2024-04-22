@@ -19,7 +19,6 @@ import static lombok.AccessLevel.PRIVATE;
 public class PostDao implements PostDaoInterface<Post, Long> {
     @Getter
     private static final PostDao instance = new PostDao();
-    private final UserDao userDao = UserDao.getInstance();
 
 
     private static final String FIND_ALL_SQL = """
@@ -80,11 +79,12 @@ public class PostDao implements PostDaoInterface<Post, Long> {
     }
 
     @Override
-    public void update(Post post) {
+    public Post update(Post post) {
         try (Connection connection = ConnectionManager.get();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_POST)) {
             var affectedRows = setInfoToPost(post, preparedStatement);
             if (affectedRows == 0) throw new DaoException("Updating post failed");
+            return post;
         } catch (SQLException e) {
             throw new DaoException("Updating post failed", e);
         }
@@ -107,7 +107,7 @@ public class PostDao implements PostDaoInterface<Post, Long> {
                         .orElseThrow(() ->
                                 new DaoException("Couldn't find the user"));
 
-                return Optional.of(createPost(resultSet, user));
+                return Optional.of(createPost(resultSet));
             }
         } catch (SQLException e) {
             throw new DaoException("Finding post by User ID failed", e);
@@ -119,18 +119,15 @@ public class PostDao implements PostDaoInterface<Post, Long> {
 
 
     @Override
-    public List<Post> findAll(Long userId) {
+    public List<Post> findAll() {
         List<Post> postList = new ArrayList<>();
         try (
                 Connection connection = ConnectionManager.get();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(FIND_ALL_SQL)) {
-            User user = UserDao.getInstance().findById(userId)
-                    .orElseThrow(() ->
-                            new DaoException("Couldn't find the user"));
 
             while (resultSet.next()) {
-                postList.add(createPost(resultSet, user));
+                postList.add(createPost(resultSet));
             }
         } catch (SQLException e) {
             throw new DaoException("Finding all posts failed", e);
@@ -139,10 +136,10 @@ public class PostDao implements PostDaoInterface<Post, Long> {
     }
 
 
-    private Post createPost(ResultSet resultSet, User user) throws SQLException {
+    private Post createPost(ResultSet resultSet) throws SQLException {
         try {
             return new Post(resultSet.getLong("id"),
-                    user,
+                    UserDao.getInstance().findById(resultSet.getLong("user_id")).orElseThrow(() -> new DaoException("Couldn't find the user")),
                     resultSet.getString("caption"),
                     resultSet.getObject("post_time", LocalDateTime.class),
                     resultSet.getString("image_url"), resultSet.getBoolean("is_deleted"));
