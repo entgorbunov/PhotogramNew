@@ -1,4 +1,9 @@
 package com.photogram.dao;
 
-public interface ImageDaoInterface<I, L> extends BaseDaoInterface<I, L>{
+import java.util.List;
+import java.util.Optional;
+
+public interface ImageDaoInterface<I, K> extends BaseDaoInterface<I, K>{
+    List<I> findAll();
+    Optional<I> findById(K id);
 }

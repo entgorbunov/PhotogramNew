@@ -1,5 +1,13 @@
 package com.photogram.dao;
 
-public interface SubscriptionDaoInterface<S, L> extends BaseDaoInterface<S, L> {
+import com.photogram.entity.User;
+
+import java.util.List;
+
+public interface SubscriptionDaoInterface<S, K> extends BaseDaoInterface<S, K> {
+
+    List<User> findUsersFollowingById(K userId);
+    List<User> findUsersFollowersById(K userId);
+
 
 }

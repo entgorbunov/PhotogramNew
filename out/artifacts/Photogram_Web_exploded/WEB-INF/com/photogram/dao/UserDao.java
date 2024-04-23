@@ -1,8 +1,10 @@
 package com.photogram.dao;
 
 import com.photogram.daoException.DaoException;
+import com.photogram.dataSource.ConnectionManager;
 import com.photogram.entity.User;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.*;
@@ -12,32 +14,25 @@ import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDao implements UserDaoInterface<User, Long> {
-    private static volatile UserDao instance = new UserDao();
 
-    private static final String SELECT_ALL_USERS = "SELECT id, username, profile_picture, bio, is_private, image_url FROM " +
-                                                   "photogram.public.Users";
+    private static final String SELECT_ALL_USERS = "SELECT id, username, profile_picture, bio, is_private, image_url, is_active FROM photogram.public.Users";
+
     private static final String SELECT_USER_BY_ID = SELECT_ALL_USERS + " WHERE id = ? ";
-    private static final String INSERT_NEW_USER = "INSERT INTO photogram.public.Users (username, profile_picture, bio, is_private, image_url) VALUES (?, ?, ?, ?, ?)";
-    private static final String UPDATE_USER = "UPDATE Users SET username = ?, profile_picture = ?, bio = ?, is_private = ?, image_url = ? WHERE id = ?";
-    private static final String DELETE_USER = "DELETE FROM photogram.public.Users WHERE id = ?";
 
+    private static final String INSERT_NEW_USER = "INSERT INTO photogram.public.Users (username, profile_picture, bio, is_private, image_url, is_active) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_USER = "UPDATE Users SET username = ?, profile_picture = ?, bio = ?, is_private = ?, image_url = ?, is_active = ? WHERE id = ?";
+    private static final String SOFT_DELETE_USER = "UPDATE Users SET is_active = FALSE WHERE id = ?";
 
-    public static UserDao getInstance() {
-        if (instance == null) {
-            synchronized (UserDao.class) {
-                if (instance == null) {
-                    instance = new UserDao();
-                }
-            }
-        }
-        return instance;
-    }
+    @Getter
+    private static final UserDao instance = new UserDao();
 
     @Override
-    public List<User> findAll(Long id, Connection connection) {
+    public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
+        try (
+                Connection connection = ConnectionManager.get();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
             while (resultSet.next()) {
                 users.add(createUser(resultSet));
             }
@@ -48,19 +43,11 @@ public class UserDao implements UserDaoInterface<User, Long> {
     }
 
 
-    private User createUser(ResultSet resultSet) throws SQLException {
-        return new User(resultSet.getObject("id", Long.class),
-                resultSet.getObject("username", String.class),
-                resultSet.getString("profile_picture"),
-                resultSet.getString("bio"),
-                resultSet.getBoolean("is_private"),
-                resultSet.getString("image_url"));
-    }
-
-
     @Override
-    public Optional<User> findById(Long id, Connection connection) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
+    public Optional<User> findById(Long id) {
+        try (
+                Connection connection = ConnectionManager.get();
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -74,13 +61,16 @@ public class UserDao implements UserDaoInterface<User, Long> {
     }
 
     @Override
-    public void save(User user, Connection connection) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
+    public void save(User user) {
+        try (
+                Connection connection = ConnectionManager.get();
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getProfilePicture());
             preparedStatement.setString(3, user.getBio());
-            preparedStatement.setBoolean(4, user.isPrivate());
+            preparedStatement.setBoolean(4, user.getIsPrivate());
             preparedStatement.setString(5, user.getImageUrl());
+            preparedStatement.setBoolean(6, user.getIsActive());
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
                 throw new DaoException("Creating user failed.");
@@ -98,15 +88,18 @@ public class UserDao implements UserDaoInterface<User, Long> {
     }
 
     @Override
-    public void update(User user, Connection connection) {
+    public User update(User user) {
+        Connection connection = ConnectionManager.get();
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getProfilePicture());
             preparedStatement.setString(3, user.getBio());
-            preparedStatement.setBoolean(4, user.isPrivate());
+            preparedStatement.setBoolean(4, user.getIsActive());
             preparedStatement.setString(5, user.getImageUrl());
-            preparedStatement.setLong(6, user.getId());
+            preparedStatement.setBoolean(6, user.getIsPrivate());
+            preparedStatement.setLong(7, user.getId());
             preparedStatement.executeUpdate();
+            return user;
         } catch (SQLException e) {
             throw new DaoException("Error updating user with ID " + user.getId() + ": " + e.getMessage(), e);
 
@@ -114,14 +107,25 @@ public class UserDao implements UserDaoInterface<User, Long> {
     }
 
     @Override
-    public boolean delete(Long id, Connection connection) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
+    public void delete(Long id) {
+        try (
+                Connection connection = ConnectionManager.get();
+                PreparedStatement preparedStatement = connection.prepareStatement(SOFT_DELETE_USER)) {
             preparedStatement.setLong(1, id);
             int changedData = preparedStatement.executeUpdate();
             if (changedData == 0) throw new DaoException("No user to delete with ID " + id);
-            return changedData > 0;
         } catch (SQLException e) {
             throw new DaoException("Error deleting user with ID " + id + ": " + e.getMessage(), e);
         }
+    }
+
+    protected User createUser(ResultSet resultSet) throws SQLException {
+        return new User(resultSet.getObject("id", Long.class),
+                resultSet.getObject("username", String.class),
+                resultSet.getString("profile_picture"),
+                resultSet.getString("bio"),
+                resultSet.getBoolean("is_private"),
+                resultSet.getString("image_url"),
+                resultSet.getBoolean("is_active"));
     }
 }

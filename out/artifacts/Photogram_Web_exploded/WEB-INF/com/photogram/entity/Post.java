@@ -18,6 +18,7 @@ public class Post {
     private String caption;
     private LocalDateTime postTime;
     private String imageUrl;
+    private Boolean isDeleted;
 
     public Post(Long id) {
         this.id = id;

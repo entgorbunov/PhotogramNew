@@ -31,17 +31,13 @@ public class PostService implements PostServiceInterface<PostDto, Long> {
     }
 
     public List<PostDto> findAll(Long userId) {
-        var user = userDao.findById(userId).orElseThrow(() ->
-                new DaoException("User not found"));
-        return postDao.findAll(user.getId()).stream()
+        return postDao.findAll().stream()
                 .map(PostMapper::toPostDto)
                 .toList();
     }
 
     public PostDto findById(Long userId) {
-        var user = userDao.findById(userId).orElseThrow(() ->
-                new DaoException("User not found"));
-        return postDao.findAll(user.getId()).stream()
+        return postDao.findAll().stream()
                 .map(PostMapper::toPostDto).findAny().orElseThrow(() ->
                         new DaoException("The Post was not found while finding"));
     }

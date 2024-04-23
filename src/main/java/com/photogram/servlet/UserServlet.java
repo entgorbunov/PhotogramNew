@@ -26,7 +26,7 @@ public class UserServlet extends HttpServlet {
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         try (var writer = resp.getWriter()) {
             try {
-                List<UserDto> users = userService.findAllById(-10L);
+                List<UserDto> users = userService.findAll();
                 writer.write("<h1>Список пользователей:</h1>");
                 if (users.isEmpty()) {
                     writer.write("<p>Пользователи не найдены.</p>");

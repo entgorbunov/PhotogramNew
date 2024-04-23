@@ -1,9 +1,7 @@
 package com.photogram.entity;
 
-
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Builder

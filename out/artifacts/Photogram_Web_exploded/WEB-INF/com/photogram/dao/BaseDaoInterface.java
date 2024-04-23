@@ -1,18 +1,12 @@
 package com.photogram.dao;
 
-import java.sql.Connection;
-import java.util.List;
-import java.util.Optional;
-
 public interface BaseDaoInterface<E, K> {
 
-    boolean delete(K id, Connection connection);
+    E update(E entity);
 
-    void save(E entity, Connection connection);
+    void save(E e);
 
-    void update(E entity, Connection connection);
+    void delete(K id);
 
-    Optional<E> findById(K id, Connection connection);
 
-    List<E> findAll(K id, Connection connection);
 }
