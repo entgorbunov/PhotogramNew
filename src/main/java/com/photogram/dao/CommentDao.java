@@ -84,7 +84,8 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
             var affectedRows = setInfoToComment(comment, preparedStatement);
             if (affectedRows == 0) {
                 throw new DaoException("Updating post failed");
-            } return comment;
+            }
+            return comment;
         } catch (SQLException e) {
             throw new DaoException("Failed to update comment", e);
         }

@@ -69,7 +69,7 @@ public class ConnectionManager {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new DriverException("PostgreSQL JDBC driver not found", e);
+            throw new DriverException("PostgresSQL JDBC driver not found", e);
         }
     }
 

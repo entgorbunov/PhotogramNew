@@ -11,9 +11,18 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostLike {
+public class Like {
     private Long id;
     private Long userId;
     private Long postId;
+    private Long commentId;
     private LocalDateTime likeTime;
+
+    public Boolean isPostLike() {
+        return commentId == null;
+    }
+
+    public Boolean isCommentLike() {
+        return commentId != null;
+    }
 }
