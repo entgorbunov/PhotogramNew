@@ -22,7 +22,10 @@
         <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.7.3" />
         <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.32" />
         <element id="module-source" name="Photogram" />
-        <element id="directory" name="lib" />
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-servlet-api:11.0.0-M19" />
+        </element>
       </element>
     </root>
   </artifact>
