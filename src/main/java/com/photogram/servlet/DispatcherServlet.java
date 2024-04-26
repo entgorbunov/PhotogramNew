@@ -12,7 +12,13 @@ import java.io.IOException;
 public class DispatcherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/users").forward(req, resp);
-        System.out.println();
+//        req.getRequestDispatcher("/users").include(req, resp);
+//        PrintWriter writer = resp.getWriter();
+//        writer.write("Hello 2");
+//
+////        req.setAttribute("1", "234");
+//        System.out.println();
+
+        resp.sendRedirect("/users");
     }
 }

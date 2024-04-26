@@ -13,13 +13,15 @@ public class SessionServlet extends HttpServlet {
     private static final String USER = "user";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 //        req.getServletContext()
         var session = req.getSession();
+
         var user = (UserDto) session.getAttribute(USER);
         if (user == null) {
             user = UserDto.builder()
-                    .id(2L)
-                    .bio("Садовник с зелёными пальцами, влюблённый в редкие орхидеи.")
+                    .id(1L)
+                    .bio("пиу пиу")
                     .build();
             session.setAttribute(USER, user);
         }

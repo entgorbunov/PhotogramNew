@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserService implements UserServiceInterface<UserDto, Long> {
 
-    public static UserService instance = new UserService();
+    public static volatile UserService instance = new UserService();
 
     private final UserDao userDao = UserDao.getInstance();
 
@@ -36,7 +36,7 @@ public class UserService implements UserServiceInterface<UserDto, Long> {
     }
 
     @Override
-    public UserDto findById(Long id) {
+    public UserDto findByUserId(Long id) {
         return userDao.findById(id).map(UserMapper::userToUserDto).orElseThrow(() ->
                 new DaoException("Find the user with userID" + id + " was failed"));
     }

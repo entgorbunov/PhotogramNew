@@ -1,6 +1,8 @@
 package com.photogram.service;
 
 
+import java.util.List;
+
 public interface BaseServiceInterface<E, K> {
     void delete(K id);
 
@@ -8,6 +10,8 @@ public interface BaseServiceInterface<E, K> {
 
     E update(E entity);
 
-    E findById(K id);
+    E findByUserId(K id);
+
+    List<E> findAll();
 
 }

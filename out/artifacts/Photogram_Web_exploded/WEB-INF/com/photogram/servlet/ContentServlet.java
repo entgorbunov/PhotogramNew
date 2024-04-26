@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet("/content")
@@ -19,6 +20,11 @@ public class ContentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        List<UserDto> userDtos = userService.findAll();
+        req.setAttribute("users", userDtos);
+        req.getSession().setAttribute("usersMap", userDtos.stream()
+                .collect(Collectors
+                        .toMap(UserDto::getId, UserDto::getUsername)));
+        req.getRequestDispatcher(JspHelper.getPath("content")).forward(req, resp);
     }
 }

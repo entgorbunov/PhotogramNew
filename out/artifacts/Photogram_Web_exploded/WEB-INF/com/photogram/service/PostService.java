@@ -19,7 +19,7 @@ public class PostService implements PostServiceInterface<PostDto, Long> {
     private static final PostDao postDao = PostDao.getInstance();
     public static final UserDao userDao = UserDao.getInstance();
 
-    public static PostService getINSTANCE() {
+    public static PostService getInstance() {
         if (INSTANCE.get() == null) {
             synchronized (PostService.class) {
                 if (INSTANCE.get() == null) {
@@ -30,14 +30,19 @@ public class PostService implements PostServiceInterface<PostDto, Long> {
         return INSTANCE.get();
     }
 
-    public List<PostDto> findAll(Long userId) {
+    public List<PostDto> findAll() {
         return postDao.findAll().stream()
                 .map(PostMapper::toPostDto)
                 .toList();
     }
 
-    public PostDto findById(Long userId) {
-        return postDao.findAll().stream()
+    public List<PostDto> findAllByUserId(Long userId) {
+        return postDao.findById(userId).stream()
+                .map(PostMapper::toPostDto).toList();
+    }
+
+    public PostDto findByUserId(Long userId) {
+        return postDao.findById(userId).stream()
                 .map(PostMapper::toPostDto).findAny().orElseThrow(() ->
                         new DaoException("The Post was not found while finding"));
     }
