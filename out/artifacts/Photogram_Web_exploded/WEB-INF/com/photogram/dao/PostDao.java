@@ -1,6 +1,6 @@
 package com.photogram.dao;
 
-import com.photogram.Exceptions.DaoException;
+import com.photogram.exceptions.DaoException;
 import com.photogram.dataSource.ConnectionManager;
 import com.photogram.entity.Post;
 import com.photogram.entity.User;

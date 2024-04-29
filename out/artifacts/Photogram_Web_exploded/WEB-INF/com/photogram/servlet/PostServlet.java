@@ -1,6 +1,6 @@
 package com.photogram.servlet;
 
-import com.photogram.Exceptions.ServletPhotogramException;
+import com.photogram.exceptions.ServletPhotogramException;
 import com.photogram.service.PostService;
 import com.photogram.util.JspHelper;
 import jakarta.servlet.ServletException;

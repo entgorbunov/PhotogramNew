@@ -2,7 +2,7 @@ package com.photogram.service;
 
 import com.photogram.dao.PostDao;
 import com.photogram.dao.UserDao;
-import com.photogram.Exceptions.DaoException;
+import com.photogram.exceptions.DaoException;
 import com.photogram.dto.PostDto;
 import com.photogram.mapper.PostMapper;
 import lombok.AccessLevel;

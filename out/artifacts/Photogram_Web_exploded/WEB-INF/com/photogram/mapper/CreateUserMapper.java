@@ -1,6 +1,6 @@
 package com.photogram.mapper;
 
-import com.photogram.Exceptions.MapperException;
+import com.photogram.exceptions.MapperException;
 import com.photogram.dto.CreateUserDto;
 import com.photogram.entity.Gender;
 import com.photogram.entity.Role;

@@ -1,6 +1,6 @@
 package com.photogram.service;
 
-import com.photogram.Exceptions.ServiceException;
+import com.photogram.exceptions.ServiceException;
 import com.photogram.util.PropertiesUtil;
 import lombok.AccessLevel;
 import lombok.Getter;

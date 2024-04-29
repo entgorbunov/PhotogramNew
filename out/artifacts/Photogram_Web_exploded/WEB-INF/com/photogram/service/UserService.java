@@ -1,8 +1,8 @@
 package com.photogram.service;
 
-import com.photogram.Exceptions.DaoException;
-import com.photogram.Exceptions.ServiceException;
-import com.photogram.Exceptions.ValidationException;
+import com.photogram.exceptions.DaoException;
+import com.photogram.exceptions.ServiceException;
+import com.photogram.exceptions.ValidationException;
 import com.photogram.dao.UserDao;
 import com.photogram.dto.CreateUserDto;
 import com.photogram.dto.UserDto;
