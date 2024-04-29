@@ -1,6 +1,6 @@
 package com.photogram.util;
 
-import com.photogram.daoException.ConnectionException;
+import com.photogram.Exceptions.ConnectionException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

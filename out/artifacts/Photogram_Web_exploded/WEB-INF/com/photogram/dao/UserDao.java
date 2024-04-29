@@ -1,13 +1,16 @@
 package com.photogram.dao;
 
-import com.photogram.daoException.DaoException;
+import com.photogram.Exceptions.DaoException;
 import com.photogram.dataSource.ConnectionManager;
+import com.photogram.entity.Gender;
+import com.photogram.entity.Role;
 import com.photogram.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +18,12 @@ import java.util.Optional;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDao implements UserDaoInterface<User, Long> {
 
-    private static final String SELECT_ALL_USERS = "SELECT id, username, profile_picture, bio, is_private, image_url, is_active FROM photogram.public.Users";
+    private static final String SELECT_ALL_USERS = "SELECT id, username, profile_picture, bio, is_private, image_url, is_active, email, password, role, gender, birthday FROM photogram.public.Users";
 
     private static final String SELECT_USER_BY_ID = SELECT_ALL_USERS + " WHERE id = ? ";
 
-    private static final String INSERT_NEW_USER = "INSERT INTO photogram.public.Users (username, profile_picture, bio, is_private, image_url, is_active) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_USER = "UPDATE Users SET username = ?, profile_picture = ?, bio = ?, is_private = ?, image_url = ?, is_active = ? WHERE id = ?";
+    private static final String INSERT_NEW_USER = "INSERT INTO photogram.public.Users (username, profile_picture, bio, is_private, image_url, is_active, email, password, role, gender, birthday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_USER = "UPDATE Users SET username = ?, profile_picture = ?, bio = ?, is_private = ?, image_url = ?, is_active = ?, email = ?, password = ?, role = ?, gender = ?, birthday = ? WHERE id = ?";
     private static final String SOFT_DELETE_USER = "UPDATE Users SET is_active = FALSE WHERE id = ?";
 
     @Getter
@@ -65,12 +68,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
         try (
                 Connection connection = ConnectionManager.get();
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_USER, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getProfilePicture());
-            preparedStatement.setString(3, user.getBio());
-            preparedStatement.setBoolean(4, user.getIsPrivate());
-            preparedStatement.setString(5, user.getImageUrl());
-            preparedStatement.setBoolean(6, user.getIsActive());
+            setUser(user, preparedStatement);
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
                 throw new DaoException("Creating user failed.");
@@ -91,13 +89,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
     public User update(User user) {
         Connection connection = ConnectionManager.get();
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER)) {
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getProfilePicture());
-            preparedStatement.setString(3, user.getBio());
-            preparedStatement.setBoolean(4, user.getIsActive());
-            preparedStatement.setString(5, user.getImageUrl());
-            preparedStatement.setBoolean(6, user.getIsPrivate());
-            preparedStatement.setLong(7, user.getId());
+            setUser(user, preparedStatement);
             preparedStatement.executeUpdate();
             return user;
         } catch (SQLException e) {
@@ -119,13 +111,37 @@ public class UserDao implements UserDaoInterface<User, Long> {
         }
     }
 
-    protected User createUser(ResultSet resultSet) throws SQLException {
-        return new User(resultSet.getObject("id", Long.class),
-                resultSet.getObject("username", String.class),
-                resultSet.getString("profile_picture"),
-                resultSet.getString("bio"),
-                resultSet.getBoolean("is_private"),
-                resultSet.getString("image_url"),
-                resultSet.getBoolean("is_active"));
+    protected User createUser(ResultSet resultSet)  {
+        try {
+            return new User(
+                    resultSet.getObject("id", Long.class),
+                    resultSet.getObject("username", String.class),
+                    resultSet.getString("profile_picture"),
+                    resultSet.getString("bio"),
+                    resultSet.getBoolean("is_private"),
+                    resultSet.getString("image_url"),
+                    resultSet.getBoolean("is_active"),
+                    resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    Role.valueOf(resultSet.getString("role")),
+                    Gender.valueOf(resultSet.getString("gender")),
+                    resultSet.getObject("birthdate", LocalDateTime.class));
+        } catch (SQLException e) {
+            throw new DaoException("Error creating user: " + e.getMessage(), e);
+        }
+    }
+
+    private void setUser(User user, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, user.getUsername());
+        preparedStatement.setString(2, user.getProfilePicture());
+        preparedStatement.setString(3, user.getBio());
+        preparedStatement.setBoolean(4, user.getIsPrivate());
+        preparedStatement.setString(5, user.getImage());
+        preparedStatement.setBoolean(6, user.getIsActive());
+        preparedStatement.setString(7, user.getEmail());
+        preparedStatement.setString(8, user.getPassword());
+        preparedStatement.setString(9, user.getRole().name());
+        preparedStatement.setString(10, user.getGender().name());
+        preparedStatement.setTimestamp(11, Timestamp.valueOf(user.getBirthday()));
     }
 }

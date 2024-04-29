@@ -1,6 +1,9 @@
 package com.photogram.entity;
 
 import lombok.*;
+
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 @Setter
@@ -15,10 +18,16 @@ public class User {
     private String username;
     private String profilePicture;
     private String bio;
-    private Boolean isPrivate;
-    private String imageUrl;
-    private Boolean isActive;
-
+    @Builder.Default
+    private Boolean isPrivate = Boolean.FALSE;
+    private String image;
+    @Builder.Default
+    private Boolean isActive = Boolean.TRUE;
+    private String email;
+    private String password;
+    private Role role;
+    private Gender gender;
+    private LocalDateTime birthday;
     public User(Long id) {
         this.id = id;
     }

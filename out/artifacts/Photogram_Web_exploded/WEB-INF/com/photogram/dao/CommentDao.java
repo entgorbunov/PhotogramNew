@@ -1,6 +1,6 @@
 package com.photogram.dao;
 
-import com.photogram.daoException.DaoException;
+import com.photogram.Exceptions.DaoException;
 import com.photogram.dataSource.ConnectionManager;
 import com.photogram.entity.CommentForPost;
 import lombok.AccessLevel;

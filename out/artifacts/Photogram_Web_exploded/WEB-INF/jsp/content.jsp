@@ -8,7 +8,6 @@
     <div>
         <span>Content. Русский</span>
         <p>Size: ${requestScope.users.size()}</p>
-        <p>Size: ${requestScope}</p>
         <p>Id: ${requestScope.users.get(0).id}</p>
         <p>Id 2: ${requestScope.users[1].id}</p>
         <p>Map Id 2: ${sessionScope.usersMap[1]}</p>

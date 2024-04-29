@@ -1,7 +1,7 @@
 package com.photogram.dataSource;
 
-import com.photogram.daoException.ConnectionException;
-import com.photogram.daoException.DriverException;
+import com.photogram.exceptions.ConnectionException;
+import com.photogram.exceptions.DriverException;
 import com.photogram.util.PropertiesUtil;
 import lombok.experimental.UtilityClass;
 import java.lang.reflect.Proxy;
