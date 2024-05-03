@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Subscription {
     private Long id;
-    private User follower;
-    private User following;
-    private LocalDateTime subscriptionTime;
+    private User subscriberUser;
+    private User subscriptionUser;
+    private LocalDateTime subscriptionDate;
 
 }

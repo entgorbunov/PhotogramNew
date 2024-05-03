@@ -77,7 +77,7 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
 
 
     @Override
-    public List<User> findUsersFollowingById(Long userId) {
+    public List<User> findSubscriptions(Long userId) {
         List<User> following = new ArrayList<>();
         try (Connection connection = ConnectionManager.get();
         PreparedStatement preparedStatement = connection.prepareStatement(FIND_FOLLOWING)) {
@@ -94,7 +94,7 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
     }
 
     @Override
-    public List<User> findUsersFollowersById(Long userId) {
+    public List<User> findSubscribers(Long userId) {
         List<User> followers = new ArrayList<>();
         try (Connection connection = ConnectionManager.get();
         PreparedStatement preparedStatement = connection.prepareStatement(FIND_FOLLOWERS)) {
@@ -114,9 +114,9 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
     private int setInfoToSubscription(Subscription subscription, PreparedStatement preparedStatement) {
         try {
             preparedStatement.setLong(1, subscription.getId());
-            preparedStatement.setLong(2, subscription.getFollower().getId());
-            preparedStatement.setLong(3, subscription.getFollowing().getId());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(subscription.getSubscriptionTime()));
+            preparedStatement.setLong(2, subscription.getSubscriberUser().getId());
+            preparedStatement.setLong(3, subscription.getSubscriptionUser().getId());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(subscription.getSubscriptionDate()));
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Failed to insert new subscription", e);

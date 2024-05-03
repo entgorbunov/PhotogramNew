@@ -2,10 +2,16 @@ package com.photogram.dto;
 
 import lombok.Builder;
 import lombok.Value;
-@Builder
+
 @Value
+@Builder
 public class UserDto {
     Long id;
-    String username;
-    String bio;
+    String name;
+    String password;
+    String imagePath;
+    String email;
+    String birthday;
+    String role;
+    String gender;
 }

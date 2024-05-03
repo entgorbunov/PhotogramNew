@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebFilter("/*")
+@WebFilter(value = "/*")
 public class CharsetFilter implements Filter {
 
 
@@ -17,4 +17,6 @@ public class CharsetFilter implements Filter {
         chain.doFilter(request, response);
         System.out.println();
     }
+
+
 }

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @WebServlet("/content")
@@ -19,12 +20,26 @@ public class ContentServlet extends HttpServlet {
     private final UserService userService = UserService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserDto> userDtos = userService.findAll();
+
+        setRequestAttributes(req, userDtos);
+        setSessionAttributes(req, userDtos);
+
+        forwardToJsp(req, resp);
+    }
+
+    private void setRequestAttributes(HttpServletRequest req, List<UserDto> userDtos) {
         req.setAttribute("users", userDtos);
-        req.getSession().setAttribute("usersMap", userDtos.stream()
-                .collect(Collectors
-                        .toMap(UserDto::getId, UserDto::getUsername)));
+    }
+
+    private void setSessionAttributes(HttpServletRequest req, List<UserDto> userDtos) {
+        Map<String , String> usersMap = userDtos.stream()
+                .collect(Collectors.toMap(UserDto::getEmail, UserDto::getName));
+        req.getSession().setAttribute("usersMap", usersMap);
+    }
+
+    private void forwardToJsp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher(JspHelper.getPath("content")).forward(req, resp);
     }
 }

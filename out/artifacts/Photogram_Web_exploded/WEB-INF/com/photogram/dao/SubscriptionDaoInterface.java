@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface SubscriptionDaoInterface<S, K> extends BaseDaoInterface<S, K> {
 
-    List<User> findUsersFollowingById(K userId);
-    List<User> findUsersFollowersById(K userId);
+    List<User> findSubscriptions(K userId);
+    List<User> findSubscribers(K userId);
 
 
 }

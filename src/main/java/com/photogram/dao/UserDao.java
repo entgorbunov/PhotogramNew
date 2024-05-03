@@ -25,6 +25,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
     private static final String INSERT_NEW_USER = "INSERT INTO photogram.public.Users (username, profile_picture, bio, is_private, image_url, is_active, email, password, role, gender, birthday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_USER = "UPDATE Users SET username = ?, profile_picture = ?, bio = ?, is_private = ?, image_url = ?, is_active = ?, email = ?, password = ?, role = ?, gender = ?, birthday = ? WHERE id = ?";
     private static final String SOFT_DELETE_USER = "UPDATE Users SET is_active = FALSE WHERE id = ?";
+    public static final String GET_BY_EMAIL_AND_PASSWORD = "SELECT * FROM photogram.public.Users WHERE email = ? AND password = ?";
 
     @Getter
     private static final UserDao instance = new UserDao();
@@ -123,9 +124,9 @@ public class UserDao implements UserDaoInterface<User, Long> {
                     resultSet.getBoolean("is_active"),
                     resultSet.getString("email"),
                     resultSet.getString("password"),
-                    Role.valueOf(resultSet.getString("role")),
-                    Gender.valueOf(resultSet.getString("gender")),
-                    resultSet.getObject("birthdate", LocalDateTime.class));
+                    Role.valueOf(resultSet.getString("role").toUpperCase()),
+                    Gender.valueOf(resultSet.getString("gender").toUpperCase()),
+                    resultSet.getObject("birthday", LocalDateTime.class));
         } catch (SQLException e) {
             throw new DaoException("Error creating user: " + e.getMessage(), e);
         }
@@ -143,5 +144,21 @@ public class UserDao implements UserDaoInterface<User, Long> {
         preparedStatement.setString(9, user.getRole().name());
         preparedStatement.setString(10, user.getGender().name());
         preparedStatement.setTimestamp(11, Timestamp.valueOf(user.getBirthday()));
+    }
+
+    public Optional<User> findByEmailAndPassword(String email, String password) {
+        try (Connection connection = ConnectionManager.get();
+        var preparedStatement = connection.prepareStatement(GET_BY_EMAIL_AND_PASSWORD)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            User user = null;
+            if (resultSet.next()) {
+                user = createUser(resultSet);
+            }
+            return Optional.ofNullable(user);
+        } catch (SQLException e) {
+            throw new DaoException("Error finding user by email and password: " + e.getMessage(), e);
+        }
     }
 }

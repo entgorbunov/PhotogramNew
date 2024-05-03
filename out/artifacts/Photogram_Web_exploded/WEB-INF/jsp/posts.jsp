@@ -10,11 +10,11 @@
           Опубликованные посты:
         </h1>
   <ul>
-    <c:if test="${not empty requestScope.posts}">
+
       <c:forEach var="post" items="${requestScope.posts}">
-        <li>${fn:toUpperCase(post.caption)}</li>
+        <li>${post.caption}</li>
       </c:forEach>
-    </c:if>
+
   </ul>
   </body>
 </html>

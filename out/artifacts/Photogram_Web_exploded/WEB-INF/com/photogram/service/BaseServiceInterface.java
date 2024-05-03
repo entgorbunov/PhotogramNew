@@ -3,15 +3,14 @@ package com.photogram.service;
 
 import java.util.List;
 
-public interface BaseServiceInterface<E, K> {
-    void delete(K id);
+public interface BaseServiceInterface<DTO, ID> {
+    void delete(ID id);
 
-    void create(E entity);
+    ID create(DTO dto);
 
-    E update(E entity);
+    DTO update(DTO dto);
 
-    E findByUserId(K id);
+    DTO findById(ID id);
 
-    List<E> findAll();
-
+    List<DTO> findAll();
 }

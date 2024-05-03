@@ -16,14 +16,19 @@ public class PostServlet extends HttpServlet {
     private final PostService postService = PostService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        Long userId = Long.valueOf(req.getParameter("userId"));
-        req.setAttribute("posts", postService.findAllByUserId(userId));
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            req.getRequestDispatcher(JspHelper.getPath("posts")).forward(req, resp);
-        } catch (ServletException e) {
+
+            String userIdParam = req.getParameter("userId");
+            Long userId = Long.valueOf(userIdParam);
+
+            req.setAttribute("posts", postService.findAllByUserId(userId));
+
+            String jspPath = JspHelper.getPath("posts");
+            req.getRequestDispatcher(jspPath).forward(req, resp);
+        } catch (ServletException | NumberFormatException e) {
             throw new ServletPhotogramException("Error while processing request", e);
         }
     }
+
 }
