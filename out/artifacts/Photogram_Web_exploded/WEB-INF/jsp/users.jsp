@@ -11,7 +11,13 @@
 <ul>
     <c:forEach var="user" items="${requestScope.users}">
 
-        <li><a href="${pageContext.request.contextPath}/posts?userId=${user.id}">${user.username}</a></li>
+        <li>
+            <a href="${pageContext.request.contextPath}/downloadImage?userId=${user.id}">${user.username}
+                <img src="${pageContext.request.contextPath}/downloadImage?userId=${user.id}" >
+            </a>
+<%--            <img src="${pageContext.request.contextPath}/${user.imageUrl}" alt="Фотография пользователя">--%>
+<%--            <a href="${pageContext.request.contextPath}/posts?userId=${user.id}">${user.username}</a>--%>
+        </li>
 
     </c:forEach>
 </ul>

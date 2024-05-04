@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Getter
 public class UserMapperForWeb  {
-    public static final String IMAGE_FOLDER = "users/";
+    public static final String IMAGE_FOLDER = "/Users/ent/Desktop/Pictures/users/";
 
     @Getter
     public static final UserMapperForWeb INSTANCE = new UserMapperForWeb();
