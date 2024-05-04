@@ -33,10 +33,9 @@ public class UserDao implements UserDaoInterface<User, Long> {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        try (
-                Connection connection = ConnectionManager.get();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
+        try (Connection connection = ConnectionManager.get();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
             while (resultSet.next()) {
                 users.add(buildUser(resultSet));
             }
@@ -112,10 +111,10 @@ public class UserDao implements UserDaoInterface<User, Long> {
         }
     }
 
-    protected User buildUser(ResultSet resultSet)  {
+    protected User buildUser(ResultSet resultSet) {
         try {
             return new User(
-                    resultSet.getObject("id", Long.class),
+                    resultSet.getLong("id"),
                     resultSet.getString("username"),
                     resultSet.getString("profile_picture"),
                     resultSet.getString("bio"),
@@ -148,7 +147,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
 
     public Optional<User> findByEmailAndPassword(String email, String password) {
         try (Connection connection = ConnectionManager.get();
-        var preparedStatement = connection.prepareStatement(GET_BY_EMAIL_AND_PASSWORD)) {
+             var preparedStatement = connection.prepareStatement(GET_BY_EMAIL_AND_PASSWORD)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();

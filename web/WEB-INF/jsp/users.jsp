@@ -10,6 +10,7 @@
 <h1>Список юзеров:</h1>
 <ul>
     <c:forEach var="user" items="${requestScope.users}">
+
         <li><a href="${pageContext.request.contextPath}/posts?userId=${user.id}">${user.username}</a></li>
 
     </c:forEach>
