@@ -1,5 +1,6 @@
 package com.photogram.dto;
 
+import com.photogram.dto.userDto.UserDtoFromDataBase;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,6 @@ import java.time.LocalDateTime;
 public class SubscriptionDto {
     private Long id;
     private LocalDateTime subscriptionDate;
-    private UserDto subscriptionUser;
-    private UserDto subscriberUser;
+    private UserDtoFromDataBase subscriptionUser;
+    private UserDtoFromDataBase subscriberUser;
 }

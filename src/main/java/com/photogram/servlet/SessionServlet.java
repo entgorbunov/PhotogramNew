@@ -1,6 +1,6 @@
 package com.photogram.servlet;
 
-import com.photogram.dto.UserDto;
+import com.photogram.dto.userDto.UserDtoFromWeb;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,15 +19,15 @@ public class SessionServlet extends HttpServlet {
 
     private void manageUserSession(HttpServletRequest req) {
         var session = req.getSession();
-        UserDto user = (UserDto) session.getAttribute(USER);
+        UserDtoFromWeb user = (UserDtoFromWeb) session.getAttribute(USER);
         if (user == null) {
             user = createUserWithDefaultValues();
             session.setAttribute(USER, user);
         }
     }
 
-    private UserDto createUserWithDefaultValues() {
-        return UserDto.builder()
+    private UserDtoFromWeb createUserWithDefaultValues() {
+        return UserDtoFromWeb.builder()
                 .email("default@example.com")
                 .name("Default User")
                 .build();

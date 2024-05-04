@@ -2,11 +2,10 @@ package com.photogram.filter;
 
 import jakarta.servlet.*;
 
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@WebFilter(value = "/*")
+//@WebFilter(value = "/*")
 public class CharsetFilter implements Filter {
 
 

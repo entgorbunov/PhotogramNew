@@ -84,7 +84,7 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
             preparedStatement.setLong(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    following.add(UserDao.getInstance().createUser(resultSet));
+                    following.add(UserDao.getInstance().buildUser(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -101,7 +101,7 @@ public class SubscriptionDao implements SubscriptionDaoInterface<Subscription, L
             preparedStatement.setLong(1, userId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    followers.add(UserDao.getInstance().createUser(resultSet));
+                    followers.add(UserDao.getInstance().buildUser(resultSet));
                 }
             }
         } catch (SQLException e) {

@@ -38,7 +38,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(SELECT_ALL_USERS)) {
             while (resultSet.next()) {
-                users.add(createUser(resultSet));
+                users.add(buildUser(resultSet));
             }
         } catch (SQLException e) {
             throw new DaoException("Error finding all users: " + e.getMessage(), e);
@@ -55,7 +55,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return Optional.of(createUser(resultSet));
+                    return Optional.of(buildUser(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -112,11 +112,11 @@ public class UserDao implements UserDaoInterface<User, Long> {
         }
     }
 
-    protected User createUser(ResultSet resultSet)  {
+    protected User buildUser(ResultSet resultSet)  {
         try {
             return new User(
                     resultSet.getObject("id", Long.class),
-                    resultSet.getObject("username", String.class),
+                    resultSet.getString("username"),
                     resultSet.getString("profile_picture"),
                     resultSet.getString("bio"),
                     resultSet.getBoolean("is_private"),
@@ -154,7 +154,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
             ResultSet resultSet = preparedStatement.executeQuery();
             User user = null;
             if (resultSet.next()) {
-                user = createUser(resultSet);
+                user = buildUser(resultSet);
             }
             return Optional.ofNullable(user);
         } catch (SQLException e) {

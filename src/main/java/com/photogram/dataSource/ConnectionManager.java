@@ -77,10 +77,12 @@ public class ConnectionManager {
         for (Connection connection : sourceConnections) {
             try {
                 connection.close();
+
             } catch (SQLException e) {
                 throw new ConnectionException("close connection failed", e);
             }
         }
+        System.out.println("All connections are closed");
     }
 
 

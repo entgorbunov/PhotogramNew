@@ -1,7 +1,7 @@
 package com.photogram.servlet;
 
-import com.photogram.dto.UserDto;
-import com.photogram.service.UserService;
+import com.photogram.dto.userDto.UserDtoFromWeb;
+import com.photogram.service.UserServiceForWeb;
 import com.photogram.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,25 +17,25 @@ import java.util.stream.Collectors;
 @WebServlet("/content")
 public class ContentServlet extends HttpServlet {
 
-    private final UserService userService = UserService.getInstance();
+    private final UserServiceForWeb userServiceForWeb = UserServiceForWeb.getInstance();
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<UserDto> userDtos = userService.findAll();
+        List<UserDtoFromWeb> userDtoFromWebs = userServiceForWeb.findAll();
 
-        setRequestAttributes(req, userDtos);
-        setSessionAttributes(req, userDtos);
+        setRequestAttributes(req, userDtoFromWebs);
+        setSessionAttributes(req, userDtoFromWebs);
 
         forwardToJsp(req, resp);
     }
 
-    private void setRequestAttributes(HttpServletRequest req, List<UserDto> userDtos) {
-        req.setAttribute("users", userDtos);
+    private void setRequestAttributes(HttpServletRequest req, List<UserDtoFromWeb> userDtoFromWebs) {
+        req.setAttribute("users", userDtoFromWebs);
     }
 
-    private void setSessionAttributes(HttpServletRequest req, List<UserDto> userDtos) {
-        Map<String , String> usersMap = userDtos.stream()
-                .collect(Collectors.toMap(UserDto::getEmail, UserDto::getName));
+    private void setSessionAttributes(HttpServletRequest req, List<UserDtoFromWeb> userDtoFromWebs) {
+        Map<String , String> usersMap = userDtoFromWebs.stream()
+                .collect(Collectors.toMap(UserDtoFromWeb::getEmail, UserDtoFromWeb::getName));
         req.getSession().setAttribute("usersMap", usersMap);
     }
 

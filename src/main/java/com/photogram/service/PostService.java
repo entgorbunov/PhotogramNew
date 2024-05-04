@@ -2,16 +2,15 @@ package com.photogram.service;
 
 import com.photogram.dao.PostDao;
 import com.photogram.dao.UserDao;
+import com.photogram.dto.PostDto;
 import com.photogram.entity.Post;
 import com.photogram.exceptions.DaoException;
-import com.photogram.dto.PostDto;
 import com.photogram.mapper.PostMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -60,12 +59,11 @@ public class PostService implements PostServiceInterface<PostDto, Long> {
     @Override
     public PostDto update(PostDto postDto) {
         return postDao.findById(postDto.getId())
-                .map(post -> {
-                    postDao.update(post);
-                    return PostMapper.toPostDto(post);
-                })
+                .map(postDao::update)
+                .map(PostMapper::toPostDto)
                 .orElseThrow(() ->
-                        new DaoException("Post" + postDto.getId() + " not found while updating the post"));
+                        new DaoException("Post" + postDto.getId() + " not found while updating the post")
+                );
     }
 
 
@@ -74,12 +72,17 @@ public class PostService implements PostServiceInterface<PostDto, Long> {
         postDao.delete(postId);
     }
 
-    public List<Post> findAllByUserId(Long userId) {
-        List<Post> postList = new ArrayList<>();
-        Optional<Post> optionalPost = postDao.findById(userId);
-        optionalPost.ifPresent(postList::add);
-        return postList;
+
+    public List<PostDto> findAllByUserId(Long userId) {
+        List<PostDto> listPostDto = new ArrayList<>();
+        List<Post> postDaoAllList = postDao.findAllById(userId);
+        for (Post post : postDaoAllList) {
+            listPostDto.add(PostMapper.toPostDto(post));
+        }
+        return listPostDto;
     }
+
+
 
 
 }

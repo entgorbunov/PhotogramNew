@@ -1,6 +1,6 @@
 package com.photogram.filter;
 
-import com.photogram.dto.UserDto;
+import com.photogram.dto.userDto.UserDtoFromWeb;
 import com.photogram.util.UrlPath;
 import jakarta.servlet.*;
 
@@ -32,7 +32,7 @@ public class AuthorizationFilter implements Filter {
     }
 
     private boolean isUserLoggedIn(ServletRequest request) {
-        UserDto user = (UserDto) ((jakarta.servlet.http.HttpServletRequest) request).getSession().getAttribute("user");
+        UserDtoFromWeb user = (UserDtoFromWeb) ((jakarta.servlet.http.HttpServletRequest) request).getSession().getAttribute("user");
         return user != null;
     }
 

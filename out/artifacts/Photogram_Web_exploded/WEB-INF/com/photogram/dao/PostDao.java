@@ -31,6 +31,7 @@ public class PostDao implements PostDaoInterface<Post, Long> {
                    from posts
             """;
 
+
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
                        where id = ?
             """;
@@ -114,6 +115,26 @@ public class PostDao implements PostDaoInterface<Post, Long> {
         }
 
         return Optional.ofNullable(post);
+
+    }
+
+    public List<Post> findAllById(Long userId) {
+        List<Post> posts = new ArrayList<>();
+        ResultSet resultSet;
+        try (Connection connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+            preparedStatement.setLong(1, userId);
+            resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                posts.add(createPost(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Finding posts by User ID failed", e);
+        }
+
+        return posts;
 
     }
 

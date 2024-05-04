@@ -1,15 +1,16 @@
-package com.photogram.dto;
+package com.photogram.dto.userDto;
 
+import jakarta.servlet.http.Part;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder
-public class UserDto {
+public class UserDtoFromWeb {
     Long id;
     String name;
     String password;
-    String imagePath;
+    Part image;
     String email;
     String birthday;
     String role;

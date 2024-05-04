@@ -1,6 +1,5 @@
 package com.photogram.mapper;
 
-public interface Mapper<F, T> {
-    T toEntity(F dto);
-    F toDto(T entity);
-}
+//public interface Mapper<F, T> {
+//    T toDto(F object);
+//}

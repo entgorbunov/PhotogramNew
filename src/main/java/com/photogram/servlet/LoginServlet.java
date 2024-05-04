@@ -1,8 +1,8 @@
 package com.photogram.servlet;
 
-import com.photogram.dto.UserDto;
+import com.photogram.dto.userDto.UserDtoFromDataBase;
 import com.photogram.exceptions.ServletPhotogramException;
-import com.photogram.service.UserService;
+import com.photogram.service.UserServiceForDataBase;
 import com.photogram.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private final UserService userService = UserService.getInstance();
+    private final UserServiceForDataBase userServiceForDataBase = UserServiceForDataBase.getInstance();
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         try {
@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        userService.login(req.getParameter("email"), req.getParameter("password"))
+        userServiceForDataBase.login(req.getParameter("email"), req.getParameter("password"))
                 .ifPresentOrElse(
                         user -> onLoginSuccess(user, req, resp),
                         () -> onLoginFail(req, resp));
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private void onLoginSuccess(UserDto user, HttpServletRequest req, HttpServletResponse resp) {
+    private void onLoginSuccess(UserDtoFromDataBase user, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().setAttribute("user", user);
         try {
             resp.sendRedirect("/users");

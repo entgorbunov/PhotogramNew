@@ -1,7 +1,7 @@
 package com.photogram.servlet;
 
 import com.photogram.service.ImageService;
-import com.photogram.service.UserService;
+import com.photogram.service.UserServiceForWeb;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebServlet("/mainPage")
 public class MainPageServlet extends HttpServlet {
-    public static final UserService userService = UserService.getInstance();
+    public static final UserServiceForWeb USER_SERVICE_FOR_WEB = UserServiceForWeb.getInstance();
     public static final ImageService imageService = ImageService.getINSTANCE();
 
 
