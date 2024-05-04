@@ -16,9 +16,9 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserServiceForWeb implements UserServiceForWebInterface<UserDtoFromWeb, Long> {
-    private final CreateUserValidator CREATE_USER_VALIDATOR = CreateUserValidator.getINSTANCE();
-    private final UserDao USER_DAO = UserDao.getInstance();
-    private final UserMapperForWeb USER_MAPPER_FOR_WEB = UserMapperForWeb.getINSTANCE();
+    private final CreateUserValidator createUserValidator = CreateUserValidator.getINSTANCE();
+    private final UserDao userDao = UserDao.getInstance();
+    private final UserMapperForWeb userMapperForWeb = UserMapperForWeb.getINSTANCE();
     private final ImageService imageService = ImageService.getINSTANCE();
     private static final String IMAGE_FOLDER = "users/";
     public static volatile UserServiceForWeb instance = new UserServiceForWeb();
@@ -36,14 +36,14 @@ public class UserServiceForWeb implements UserServiceForWebInterface<UserDtoFrom
 
     @Override
     public Long create(UserDtoFromWeb userDtoFromWeb)  {
-        ValidationResult validationResult = CREATE_USER_VALIDATOR.isValid(userDtoFromWeb);
+        ValidationResult validationResult = createUserValidator.isValid(userDtoFromWeb);
         if (!validationResult.isValid()) {
             throw new ValidationException(validationResult.getErrors());
         }
         try {
             imageService.upload(IMAGE_FOLDER + userDtoFromWeb.getImage().getSubmittedFileName(), userDtoFromWeb.getImage().getInputStream() );
-            User userEntity = USER_MAPPER_FOR_WEB.toEntity(userDtoFromWeb);
-            USER_DAO.save(userEntity);
+            User userEntity = userMapperForWeb.toEntity(userDtoFromWeb);
+            userDao.save(userEntity);
             return userEntity.getId();
         } catch (IOException e) {
             throw new ServiceException("Error uploading the image", e);
