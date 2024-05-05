@@ -25,7 +25,7 @@ public class UserDao implements UserDaoInterface<User, Long> {
     private static final String INSERT_NEW_USER = "INSERT INTO photogram.public.Users (username, profile_picture, bio, is_private, image_url, is_active, email, password, role, gender, birthday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_USER = "UPDATE Users SET username = ?, profile_picture = ?, bio = ?, is_private = ?, image_url = ?, is_active = ?, email = ?, password = ?, role = ?, gender = ?, birthday = ? WHERE id = ?";
     private static final String SOFT_DELETE_USER = "UPDATE Users SET is_active = FALSE WHERE id = ?";
-    public static final String GET_BY_EMAIL_AND_PASSWORD = "SELECT * FROM photogram.public.Users WHERE email = ? AND password = ?";
+    public static final String GET_BY_EMAIL_AND_PASSWORD = "SELECT id, username, profile_picture, bio, is_private, image_url, is_active, email, password, role, gender, birthday FROM photogram.public.Users WHERE email = ? AND password = ?";
 
     @Getter
     private static final UserDao instance = new UserDao();

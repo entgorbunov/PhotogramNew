@@ -13,7 +13,7 @@
 
         <li>
             <a href="${pageContext.request.contextPath}/downloadImage?userId=${user.id}">${user.username}
-                <img src="${pageContext.request.contextPath}/downloadImage?userId=${user.id}" >
+                <img height="150" width="150" src="${pageContext.request.contextPath}/downloadImage?userId=${user.id}" >
             </a>
 <%--            <img src="${pageContext.request.contextPath}/${user.imageUrl}" alt="Фотография пользователя">--%>
 <%--            <a href="${pageContext.request.contextPath}/posts?userId=${user.id}">${user.username}</a>--%>

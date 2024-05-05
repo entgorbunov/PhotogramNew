@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 
     private void onLoginFail(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            resp.sendRedirect("/login?error" + req.getParameter("email"));
+            resp.sendRedirect("/login?error=true" + req.getParameter("email"));
         } catch (IOException e) {
             throw new ServletPhotogramException("Login failed", e);
         }

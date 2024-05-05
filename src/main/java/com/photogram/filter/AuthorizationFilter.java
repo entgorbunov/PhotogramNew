@@ -1,7 +1,6 @@
 package com.photogram.filter;
 
 import com.photogram.dto.userDto.UserDtoFromWeb;
-import com.photogram.util.UrlPath;
 import jakarta.servlet.*;
 
 import javax.servlet.annotation.WebFilter;
@@ -10,11 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+import static com.photogram.util.UrlPath.*;
+
 @WebFilter("/*")
 public class AuthorizationFilter implements Filter {
 
 
-    public static final Set<String> PUBLIC_PATH = Set.of(UrlPath.LOGIN, UrlPath.REGISTRATION, UrlPath.IMAGES);
+    public static final Set<String> PUBLIC_PATH = Set.of(LOGIN, REGISTRATION, IMAGES);
 
 
     @Override
@@ -27,18 +28,18 @@ public class AuthorizationFilter implements Filter {
             ((HttpServletResponse) response).sendRedirect(
                     previousPage != null
                             ? previousPage:
-                            UrlPath.LOGIN);
+                            LOGIN);
         }
     }
 
     private boolean isUserLoggedIn(ServletRequest request) {
-        UserDtoFromWeb user = (UserDtoFromWeb) ((jakarta.servlet.http.HttpServletRequest) request).getSession().getAttribute("user");
+        UserDtoFromWeb user = (UserDtoFromWeb) ((HttpServletRequest) request).getSession().getAttribute("user");
         return user != null;
     }
 
 
     private boolean isPublicPath(String uri) {
         return AuthorizationFilter.PUBLIC_PATH.stream()
-                .anyMatch(path -> uri.startsWith(path));
+                .anyMatch(uri::startsWith);
     }
 }
