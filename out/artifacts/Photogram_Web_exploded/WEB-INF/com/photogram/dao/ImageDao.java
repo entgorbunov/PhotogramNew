@@ -1,21 +1,33 @@
 package com.photogram.dao;
 
-import com.photogram.exceptions.DaoException;
 import com.photogram.dataSource.ConnectionManager;
 import com.photogram.entity.Image;
+import com.photogram.exceptions.DaoException;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImageDao implements ImageDaoInterface<Image, Long> {
-    @Getter
-    private static final ImageDao INSTANCE = new ImageDao();
+    private final static AtomicReference<ImageDao> IMAGE_DAO_ATOMIC_REFERENCE = new AtomicReference<>();
+
+    public static ImageDao getImageDaoAtomicReference() {
+        IMAGE_DAO_ATOMIC_REFERENCE.get();
+        if (IMAGE_DAO_ATOMIC_REFERENCE.get() == null) {
+            ImageDao newImageDao = new ImageDao();
+            if (IMAGE_DAO_ATOMIC_REFERENCE.compareAndSet(null, newImageDao)) {
+                return newImageDao;
+            } else {
+                return IMAGE_DAO_ATOMIC_REFERENCE.get();
+            }
+        }
+        return IMAGE_DAO_ATOMIC_REFERENCE.get();
+    }
 
 
 
@@ -128,9 +140,9 @@ public class ImageDao implements ImageDaoInterface<Image, Long> {
         try {
             return new Image(resultSet.getLong("id"),
                     resultSet.getString("path"),
-                    PostDao.getInstance().findById(resultSet.getLong("post_id")).orElseThrow(() ->
+                    PostDao.getPostDaoAtomicReference().findById(resultSet.getLong("post_id")).orElseThrow(() ->
                             new DaoException("Post hasn't found by Id")),
-                    UserDao.getInstance().findById(resultSet.getLong("user_id")).orElseThrow(() ->
+                    UserDao.getUserDaoAtomicReference().findById(resultSet.getLong("user_id")).orElseThrow(() ->
                             new DaoException("User hasn't found by Id")),
                     resultSet.getBoolean("is_deleted"),
                     resultSet.getTimestamp("uploaded_time").toLocalDateTime());

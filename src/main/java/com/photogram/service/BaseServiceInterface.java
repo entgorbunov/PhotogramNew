@@ -8,7 +8,7 @@ public interface BaseServiceInterface<DTO, ID> {
 
     ID create(DTO dto);
 
-    DTO update(DTO dto);
+    DTO updateWithImage(DTO dto);
 
     DTO findById(ID id);
 

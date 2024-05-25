@@ -2,7 +2,6 @@ package com.photogram.entity;
 
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Builder
@@ -18,7 +17,9 @@ public class Post {
     private String caption;
     private LocalDateTime postTime;
     private String imageUrl;
-    private Boolean isDeleted;
+    @Builder.Default
+    private Boolean isDeleted = Boolean.FALSE;
+    private String text;
 
     public Post(Long id) {
         this.id = id;

@@ -127,9 +127,9 @@ public class CommentDao implements CommentDaoInterface<CommentForPost, Long> {
     private CommentForPost createComment(ResultSet resultSet) {
         try {
             return new CommentForPost(resultSet.getLong("id"),
-                    PostDao.getInstance().findById(resultSet.getLong("post_id")).orElseThrow(() ->
+                    PostDao.getPostDaoAtomicReference().findById(resultSet.getLong("post_id")).orElseThrow(() ->
                             new DaoException("Post not found")),
-                    UserDao.getInstance().findById(resultSet.getLong("user_id")).orElseThrow(() ->
+                    UserDao.getUserDaoAtomicReference().findById(resultSet.getLong("user_id")).orElseThrow(() ->
                             new DaoException("User not found")),
                     resultSet.getString("text"),
                     resultSet.getTimestamp("comment_time").toLocalDateTime());

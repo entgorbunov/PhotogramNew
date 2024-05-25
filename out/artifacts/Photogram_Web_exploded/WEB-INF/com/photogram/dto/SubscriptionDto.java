@@ -1,9 +1,8 @@
 package com.photogram.dto;
 
-import com.photogram.dto.userDto.UserDtoFromDataBase;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -12,8 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class SubscriptionDto {
-    private Long id;
-    private LocalDateTime subscriptionDate;
-    private UserDtoFromDataBase subscriptionUser;
-    private UserDtoFromDataBase subscriberUser;
+    private LocalDate subscriptionDate;
+    private Long userId;
+    private Long followerId;
 }

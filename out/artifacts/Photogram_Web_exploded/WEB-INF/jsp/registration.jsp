@@ -15,12 +15,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </head>
-<%--<img src="${pageContext.request.contextPath}/images/users/42.jpg" alt="User image">--%>
-<%--<img height="600" width="400" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">--%>
 <body>
 <div class="container mt-5">
-    <h2>Register</h2>
-    <form action="/registration" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <h2>Registration page</h2>
+    <form action="${pageContext.request.contextPath}/registration" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" name="username" id="username" required>
+        </div>
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" name="name" id="name" required>
@@ -41,14 +43,6 @@
             <label for="password">Password:</label>
             <input type="password" class="form-control" name="password" id="password" required>
         </div>
-        <div class="form-group">
-            <label for="role">Role:</label>
-            <select class="form-control" name="role" id="role">
-                <c:forEach var="role" items="${roles}">
-                    <option value="${role}">${role}</option>
-                </c:forEach>
-            </select>
-        </div>
         <div>
             <label>Gender:</label>
             <c:forEach var="gender" items="${genders}">
@@ -62,7 +56,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Send</button>
     </form>
-    <a href="/login" class="btn btn-secondary mt-3">Login</a>
+    <a href="${pageContext.request.contextPath}/login" class="btn btn-secondary mt-3">Login</a>
     <c:if test="${not empty errors}">
         <div class="alert alert-danger mt-4">
             <c:forEach var="error" items="${errors}">

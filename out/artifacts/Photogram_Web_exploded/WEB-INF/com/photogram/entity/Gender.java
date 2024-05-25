@@ -1,14 +1,30 @@
 package com.photogram.entity;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Optional;
 
+@Getter
 public enum Gender {
-    MALE, FEMALE;
+    MALE(1),
+    FEMALE(2);
 
-    public static Optional<Gender> find(String gender) {
-       return Arrays.stream(values())
-               .filter(it -> it.name().equals(gender))
-               .findFirst();
+    private final int genderId;
+
+    Gender(int genderId) {
+        this.genderId = genderId;
+    }
+
+    public static Optional<Gender> findByGenderId(int id) {
+        return Arrays.stream(values())
+                .filter(gender -> gender.getGenderId() == id)
+                .findFirst();
+    }
+
+    public static Optional<Gender> find(String name) {
+        return Arrays.stream(values())
+                .filter(gender -> gender.name().equalsIgnoreCase(name))
+                .findFirst();
     }
 }
